@@ -1,0 +1,21 @@
+# CODEOWNERS for BLINTZY Enterprise Codebase
+
+# Global owners for the entire repository
+*       @founding-cto
+
+# Core Architecture & Infrastructure
+/src/config/      @founding-cto @lead-architect
+/src/lib/         @founding-cto @lead-architect
+/src/providers/   @founding-cto @lead-architect
+/docs/            @founding-cto
+
+# Design System
+/src/design-system/ @lead-designer @frontend-lead
+/src/components/    @frontend-lead
+
+# Backend & Security
+/src/services/    @backend-lead
+/src/middleware/  @backend-lead @security-lead
+
+# CI/CD and DevOps
+/.github/         @devops-lead
