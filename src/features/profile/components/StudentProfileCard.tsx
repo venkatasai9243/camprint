@@ -4,8 +4,11 @@ import { useProfile } from '../hooks/useProfile';
 import { ProfileAvatar } from './ProfileAvatar';
 import { Edit2, BadgeCheck } from 'lucide-react';
 
+import { useRouter } from 'next/navigation';
+
 export const StudentProfileCard = () => {
   const { profile } = useProfile();
+  const router = useRouter();
 
   if (!profile) return null;
 
@@ -15,7 +18,10 @@ export const StudentProfileCard = () => {
       
       <div className="relative flex justify-between items-start pt-2">
         <ProfileAvatar name={profile.name} size="lg" />
-        <button className="p-2 bg-background/80 backdrop-blur rounded-full text-primary hover:bg-muted transition-colors border border-border shadow-sm">
+        <button 
+          onClick={() => router.push('/app/profile/edit')}
+          className="p-2 bg-background/80 backdrop-blur rounded-full text-primary hover:bg-muted transition-colors border border-border shadow-sm"
+        >
           <Edit2 className="w-4 h-4" />
         </button>
       </div>

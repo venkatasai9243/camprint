@@ -12,7 +12,7 @@ import { AppHeader } from '@/features/app-shell/components/AppHeader';
 import { APP_ROUTES } from '@/constants/routes';
 
 const CartPageContent = () => {
-  const router = useRouter();
+    const router = useRouter();
   const { cart, status, updateQuantity, removeItem, applyCoupon, refreshCart } = useCart();
 
   const handleCheckout = () => {

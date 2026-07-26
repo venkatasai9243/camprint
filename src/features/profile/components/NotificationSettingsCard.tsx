@@ -9,7 +9,7 @@ export const NotificationSettingsCard = () => {
   return (
     <div className="bg-card border border-border rounded-2xl shadow-sm mt-4 overflow-hidden">
       <button 
-        onClick={() => router.push('/app/notifications/preferences')}
+        onClick={() => router.push('/app/profile/notifications')}
         className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors text-left"
       >
         <div className="flex items-center gap-3">

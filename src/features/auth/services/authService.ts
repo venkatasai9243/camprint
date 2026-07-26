@@ -72,8 +72,8 @@ export const authService = {
   ) => {
     const supabase = createClient();
     try {
-      // 1. Insert into student_profiles
-      const { error: profileError } = await supabase.from('student_profiles').insert({
+      // 1. Upsert into student_profiles (handles duplicate key error if they try again)
+      const { error: profileError } = await supabase.from('student_profiles').upsert({
         user_id: userId,
         full_name: step1Data.fullName,
         search_name: step1Data.fullName.toLowerCase(),
@@ -82,27 +82,66 @@ export const authService = {
         avatar_path: step1Data.avatarPath || null,
         profile_completed: true,
         profile_completion_percentage: 100,
-      });
+      }, { onConflict: 'user_id' });
 
       if (profileError) throw profileError;
 
-      // 2. Insert into student_academic_records
-      const { error: academicError } = await supabase.from('student_academic_records').insert({
+      // Ensure we have a department_id. Since UI doesn't ask for it, we must fetch it from the selected branch
+      let deptId = step2Data.departmentId;
+      if (!deptId) {
+        const { data: branchData, error: branchErr } = await supabase
+          .from('branches')
+          .select('department_id')
+          .eq('id', step2Data.branchId)
+          .single();
+        
+        if (branchErr) throw branchErr;
+        deptId = branchData.department_id;
+      }
+
+      // Fetch the actual semester_id based on academic_year_id
+      const { data: semData, error: semErr } = await supabase
+        .from('semesters')
+        .select('id')
+        .eq('academic_year_id', step2Data.academicYearId)
+        .limit(1)
+        .single();
+        
+      if (semErr) throw new Error("Could not find a valid semester for this academic year. Please contact support.");
+      
+      const actualSemesterId = semData.id;
+
+      // First, let's check if an academic record already exists to avoid duplicates
+      const { data: existingRecord } = await supabase
+        .from('student_academic_records')
+        .select('id')
+        .eq('student_id', userId)
+        .single();
+
+      const academicPayload = {
         student_id: userId,
         roll_number: step2Data.rollNumber,
         college_id: step2Data.collegeId,
-        department_id: step2Data.departmentId,
+        department_id: deptId,
         branch_id: step2Data.branchId,
         academic_year_id: step2Data.academicYearId,
-        semester_id: mappedSemesterId,
+        semester_id: actualSemesterId,
         section_id: step2Data.sectionId,
-        classroom_id: mappedClassroomId,
-      });
+        block: step2Data.block,
+        classroom_number: step2Data.classroomNumber,
+      };
 
-      if (academicError) {
-        // Rollback attempt if possible (note: true transactions require RPC in Supabase, but this is a dual insert approach)
-        await supabase.from('student_profiles').delete().eq('user_id', userId);
-        throw academicError;
+      if (existingRecord) {
+        const { error: academicUpdateError } = await supabase
+          .from('student_academic_records')
+          .update(academicPayload)
+          .eq('id', existingRecord.id);
+        if (academicUpdateError) throw academicUpdateError;
+      } else {
+        const { error: academicInsertError } = await supabase
+          .from('student_academic_records')
+          .insert(academicPayload);
+        if (academicInsertError) throw academicInsertError;
       }
 
       return { success: true };

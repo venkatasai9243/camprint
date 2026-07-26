@@ -23,6 +23,7 @@ export interface AcademicProfile {
   semester: number;
   section: string;
   rollNumber: string;
+  classroomNumber?: string;
 }
 
 export interface SavedClassroom {

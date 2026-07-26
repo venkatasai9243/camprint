@@ -55,10 +55,7 @@ const CheckoutPageContent = () => {
       <CheckoutHeader />
 
       <main className="flex-1 flex flex-col gap-6 p-4 max-w-4xl mx-auto w-full pb-40">
-        <DeliveryCard 
-          details={state.deliveryDetails} 
-          onUpdate={setDeliveryDetails} 
-        />
+        <DeliveryCard />
         
         <PaymentMethodCard 
           selectedId={state.paymentMethodId}

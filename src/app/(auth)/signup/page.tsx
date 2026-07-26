@@ -8,12 +8,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signupSchema, SignupFormData } from '@/features/auth/validators/authValidators';
 import { authService } from '@/features/auth/services/authService';
+import { AuthLayout } from '@/features/auth/components/AuthLayout';
 
 export default function SignupPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema)
@@ -24,7 +24,8 @@ export default function SignupPage() {
     setError(null);
     try {
       await authService.signUpWithEmail(data);
-      setSuccessMsg("Check your email for the verification link!");
+      // Assuming email verification is off or auto-confirm is on
+      router.push('/app/onboarding');
     } catch (err: any) {
       setError(err.message || 'Failed to sign up');
     } finally {
@@ -41,19 +42,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      {/* Floating background elements */}
-      <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-primary/20 blur-[100px] rounded-full" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-secondary/20 blur-[100px] rounded-full" />
-
+    <AuthLayout>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-card/40 backdrop-blur-2xl p-8 rounded-3xl border border-border/50 shadow-premium z-10"
+        className="w-full bg-white p-8 rounded-3xl"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black bg-gradient-to-br from-foreground to-foreground/50 bg-clip-text text-transparent mb-2">
+          <h1 className="text-3xl font-black text-primary mb-2">
             Join BLINTZY
           </h1>
           <p className="text-muted-foreground text-sm">Create an account to get started</p>
@@ -64,16 +61,10 @@ export default function SignupPage() {
             {error}
           </div>
         )}
-        
-        {successMsg && (
-          <div className="mb-4 p-4 bg-green-500/10 text-green-500 rounded-lg text-sm text-center font-medium">
-            {successMsg}
-          </div>
-        )}
 
         <button 
           onClick={onGoogleLogin}
-          className="w-full bg-white text-black py-3 rounded-xl font-bold mb-6 flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
+          className="w-full border border-border bg-white text-black py-3 rounded-xl font-bold mb-6 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -86,7 +77,7 @@ export default function SignupPage() {
 
         <div className="relative flex items-center py-2 mb-6">
           <div className="flex-grow border-t border-border"></div>
-          <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs uppercase">Or email</span>
+          <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs uppercase tracking-wider font-semibold">Or email</span>
           <div className="flex-grow border-t border-border"></div>
         </div>
 
@@ -122,7 +113,7 @@ export default function SignupPage() {
           <button 
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold shadow-glow mt-4 disabled:opacity-50 transition-all"
+            className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold shadow-glow mt-4 disabled:opacity-50 transition-all hover:bg-primary/90"
           >
             {isLoading ? "Creating account..." : "Create Account"}
           </button>
@@ -135,6 +126,6 @@ export default function SignupPage() {
           </Link>
         </p>
       </motion.div>
-    </div>
+    </AuthLayout>
   );
 }

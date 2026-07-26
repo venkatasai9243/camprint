@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { forgotPasswordSchema, ForgotPasswordFormData } from '@/features/auth/validators/authValidators';
 import { authService } from '@/features/auth/services/authService';
+import { AuthLayout } from '@/features/auth/components/AuthLayout';
 
 export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,18 +33,15 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-primary/20 blur-[100px] rounded-full" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-secondary/20 blur-[100px] rounded-full" />
-
+    <AuthLayout>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-card/40 backdrop-blur-2xl p-8 rounded-3xl border border-border/50 shadow-premium z-10"
+        className="w-full bg-white p-8 rounded-3xl"
       >
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-black mb-2">Reset Password</h1>
+          <h1 className="text-2xl font-black mb-2 text-primary">Reset Password</h1>
           <p className="text-muted-foreground text-sm">Enter your email to receive a reset link</p>
         </div>
 
@@ -73,7 +71,7 @@ export default function ForgotPasswordPage() {
           <button 
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold shadow-glow mt-2 disabled:opacity-50 transition-all"
+            className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold shadow-glow mt-2 disabled:opacity-50 transition-all hover:bg-primary/90"
           >
             {isLoading ? "Sending..." : "Send Reset Link"}
           </button>
@@ -86,6 +84,6 @@ export default function ForgotPasswordPage() {
           </Link>
         </p>
       </motion.div>
-    </div>
+    </AuthLayout>
   );
 }

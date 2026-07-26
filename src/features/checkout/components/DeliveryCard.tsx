@@ -1,17 +1,12 @@
 // src/features/checkout/components/DeliveryCard.tsx
 "use client";
-import React, { useState } from 'react';
-import { DeliveryDetails } from '../types';
-import { DeliveryLocationSelector } from './DeliveryLocationSelector';
-import { MapPin } from 'lucide-react';
+import { MapPin, Edit2 } from 'lucide-react';
+import { useStudent } from '@/features/student/providers/StudentProvider';
+import { useRouter } from 'next/navigation';
 
-interface DeliveryCardProps {
-  details: DeliveryDetails | null;
-  onUpdate: (details: DeliveryDetails) => void;
-}
-
-export const DeliveryCard = ({ details, onUpdate }: DeliveryCardProps) => {
-  const [isEditing, setIsEditing] = useState(!details);
+export const DeliveryCard = () => {
+  const { profile, academicRecord } = useStudent();
+  const router = useRouter();
 
   return (
     <div className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col gap-4">
@@ -20,30 +15,28 @@ export const DeliveryCard = ({ details, onUpdate }: DeliveryCardProps) => {
           <MapPin className="w-5 h-5 text-primary" />
           <h2>Delivery Location</h2>
         </div>
-        {details && !isEditing && (
-          <button 
-            onClick={() => setIsEditing(true)}
-            className="text-sm text-primary font-semibold hover:underline"
-          >
-            Change
-          </button>
-        )}
+        <button 
+          onClick={() => router.push('/app/profile/edit-delivery')}
+          className="text-sm text-primary font-semibold hover:underline flex items-center gap-1"
+        >
+          <Edit2 className="w-3.5 h-3.5" /> Edit
+        </button>
       </div>
 
-      {isEditing ? (
-        <DeliveryLocationSelector 
-          selectedId={details?.locationId}
-          onSelect={(d) => {
-            onUpdate(d);
-            setIsEditing(false);
-          }}
-        />
-      ) : (
-        <div className="flex flex-col bg-muted/30 p-3 rounded-xl border border-border/50">
-          <span className="font-semibold text-sm">{details?.locationName}</span>
-          <span className="text-xs text-muted-foreground mt-0.5">Est: {details?.estimatedTime}</span>
-        </div>
-      )}
+      <div className="flex flex-col bg-muted/30 p-3 rounded-xl border border-border/50">
+        <span className="font-semibold text-sm">
+          {academicRecord?.colleges?.name || 'College'}, {academicRecord?.branches?.name || 'Branch'}
+        </span>
+        <span className="text-sm text-foreground mt-1">
+          {academicRecord?.block || 'Block'}, Section {academicRecord?.sections?.name || 'N/A'}, Room {academicRecord?.classroom_number || 'N/A'}
+        </span>
+        {profile?.delivery_notes && (
+          <p className="text-xs text-muted-foreground mt-2 bg-background p-2 rounded-md border border-border/50">
+            <span className="font-semibold block mb-0.5">Notes:</span>
+            {profile.delivery_notes}
+          </p>
+        )}
+      </div>
     </div>
   );
 };

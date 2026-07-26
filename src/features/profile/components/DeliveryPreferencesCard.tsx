@@ -1,15 +1,14 @@
 // src/features/profile/components/DeliveryPreferencesCard.tsx
 import React from 'react';
-import { useSettings } from '../hooks/useSettings';
+import { useStudent } from '@/features/student/providers/StudentProvider';
 import { Truck, MapPin } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export const DeliveryPreferencesCard = () => {
-  const { deliveryPref } = useSettings();
+  const { profile, academicRecord } = useStudent();
+  const router = useRouter();
 
-  if (!deliveryPref) return null;
-
-  const defaultRoom = deliveryPref.savedClassrooms.find(r => r.id === deliveryPref.defaultClassroomId) 
-                      || deliveryPref.savedClassrooms.find(r => r.isDefault);
+  if (!profile || !academicRecord) return null;
 
   return (
     <div className="bg-card border border-border rounded-2xl p-4 shadow-sm mt-4">
@@ -20,29 +19,27 @@ export const DeliveryPreferencesCard = () => {
           </div>
           <h3 className="font-bold text-foreground">Delivery Preferences</h3>
         </div>
-        <button className="text-sm font-semibold text-primary hover:underline">Edit</button>
+        <button onClick={() => router.push('/app/profile/edit-delivery')} className="text-sm font-semibold text-primary hover:underline">Edit</button>
       </div>
 
-      {defaultRoom ? (
-        <div className="flex items-start gap-3 bg-muted/30 p-3 rounded-xl border border-border/50">
-          <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-          <div className="flex flex-col gap-1">
-            <span className="text-sm font-bold text-foreground flex items-center gap-2">
-              {defaultRoom.roomNumber}
-              <span className="text-[10px] uppercase bg-primary text-primary-foreground px-1.5 py-0.5 rounded-sm">Default</span>
-            </span>
-            <span className="text-xs text-muted-foreground">{defaultRoom.building}, {defaultRoom.floor}</span>
-            {defaultRoom.deliveryNotes && (
-              <p className="text-xs text-muted-foreground mt-1 bg-background p-2 rounded-md border border-border/50">
-                <span className="font-semibold block mb-0.5">Notes:</span>
-                {defaultRoom.deliveryNotes}
-              </p>
-            )}
-          </div>
+      <div className="flex items-start gap-3 bg-muted/30 p-3 rounded-xl border border-border/50">
+        <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-bold text-foreground flex items-center gap-2">
+            {academicRecord.classroom_number || 'Room not set'}
+            <span className="text-[10px] uppercase bg-primary text-primary-foreground px-1.5 py-0.5 rounded-sm">Default</span>
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {academicRecord.colleges?.name || 'College'}, {academicRecord.branches?.name || 'Branch'}, {academicRecord.block || 'Block'}, Section {academicRecord.sections?.name || 'N/A'}
+          </span>
+          {profile.delivery_notes && (
+            <p className="text-xs text-muted-foreground mt-1 bg-background p-2 rounded-md border border-border/50">
+              <span className="font-semibold block mb-0.5">Notes:</span>
+              {profile.delivery_notes}
+            </p>
+          )}
         </div>
-      ) : (
-        <p className="text-sm text-muted-foreground">No default delivery location set.</p>
-      )}
+      </div>
     </div>
   );
 };

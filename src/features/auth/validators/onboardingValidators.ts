@@ -8,10 +8,12 @@ export const onboardingStep1Schema = z.object({
 
 export const onboardingStep2Schema = z.object({
   collegeId: z.string().uuid('Please select a college'),
-  departmentId: z.string().uuid('Please select a department'),
+  departmentId: z.string().uuid('Please select a department').optional(),
   branchId: z.string().uuid('Please select a branch'),
   academicYearId: z.string().uuid('Please select your academic year'),
   sectionId: z.string().uuid('Please select your section'),
+  block: z.string().min(1, 'Block is required'),
+  classroomNumber: z.string().min(1, 'Classroom is required'),
   rollNumber: z.string().min(3, 'Roll number is required'),
 });
 

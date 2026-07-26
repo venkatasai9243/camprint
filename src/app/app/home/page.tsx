@@ -7,6 +7,7 @@ import { AnnouncementCarousel } from '@/features/home/components/AnnouncementCar
 import { RecentOrders } from '@/features/home/components/RecentOrders';
 import { SupportCard } from '@/features/home/components/SupportCard';
 import { WidgetSkeleton, CurrentOrderSkeleton } from '@/features/home/components/HomeSkeleton';
+import { DashboardEntry } from '@/features/home/components/DashboardEntry';
 
 // In a real app, these would be separate async data fetching functions per widget
 import { MOCK_CURRENT_ORDER, MOCK_QUICK_SERVICES, MOCK_ANNOUNCEMENTS, MOCK_SUPPORT_ACTIONS } from '@/features/home/mock/dashboardData';
@@ -77,19 +78,15 @@ export default async function HomeDashboard() {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full pb-24">
-      <section className="px-4 pt-6">
-        <h1 className="text-2xl font-bold">Good Morning 👋</h1>
-        <p className="text-lg text-muted-foreground">Sarah</p>
-        <p className="mt-1 text-sm text-primary font-medium">Campus Printing. Delivered Smarter.</p>
-      </section>
-
-      {/* Backend-Driven Widget Layout Engine */}
-      {activeWidgets.map(widget => (
-        <React.Fragment key={widget.id}>
-          {renderWidget(widget.id)}
-        </React.Fragment>
-      ))}
-    </div>
+    <DashboardEntry>
+      <div className="flex flex-col gap-6 w-full pb-24">
+        {/* Backend-Driven Widget Layout Engine */}
+        {activeWidgets.map(widget => (
+          <React.Fragment key={widget.id}>
+            {renderWidget(widget.id)}
+          </React.Fragment>
+        ))}
+      </div>
+    </DashboardEntry>
   );
 }
