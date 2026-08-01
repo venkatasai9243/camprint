@@ -5,7 +5,7 @@ export const staggerContainer: Variants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.05,
     },
   },
 };
@@ -17,8 +17,8 @@ export const fadeInUp: Variants = {
     y: 0,
     transition: {
       type: "spring",
-      stiffness: 70,
-      damping: 15,
+      stiffness: 250,
+      damping: 25,
     },
   },
 };
@@ -28,7 +28,7 @@ export const fadeIn: Variants = {
   show: {
     opacity: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.3,
       ease: "easeOut",
     },
   },
@@ -41,8 +41,8 @@ export const scaleUp: Variants = {
     scale: 1,
     transition: {
       type: "spring",
-      stiffness: 100,
-      damping: 20,
+      stiffness: 300,
+      damping: 25,
     },
   },
 };

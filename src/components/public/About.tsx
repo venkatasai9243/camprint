@@ -16,19 +16,34 @@ const sections = [
 
 export function About() {
   return (
-    <SectionContainer id="why-blintzy" className="bg-gray-900 text-white border-b border-gray-800">
-      <SectionHeading 
-        badge="About BLINTZY"
-        title="We are rewriting the rules." 
-        subtitle="For too long, campus printing has been stuck in the past. We are here to bring it into the future."
-      />
+    <SectionContainer id="why-blintzy" className="bg-gray-900 text-white border-b border-gray-800 !py-16">
+      <div className="flex flex-col items-center text-center mb-10 max-w-3xl mx-auto">
+        <motion.span 
+          variants={fadeInUp}
+          className="text-sm font-bold tracking-wider text-orange-500 uppercase bg-orange-500/10 px-3 py-1 rounded-full mb-4"
+        >
+          About BLINTZY
+        </motion.span>
+        <motion.h2 
+          variants={fadeInUp}
+          className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4"
+        >
+          We are rewriting the rules.
+        </motion.h2>
+        <motion.p 
+          variants={fadeInUp}
+          className="text-lg text-gray-400 leading-relaxed"
+        >
+          For too long, campus printing has been stuck in the past. We are here to bring it into the future.
+        </motion.p>
+      </div>
 
       <motion.div 
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
-        className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center"
+        className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 items-center"
       >
         <motion.div variants={fadeInUp} className="flex-1 space-y-6">
           <h3 className="text-3xl font-bold text-white mb-6">Built by students, for the campus.</h3>

@@ -7,9 +7,7 @@ export const publicContent = {
     primaryCTA: "Start Printing",
     secondaryCTA: "Watch Demo"
   },
-  socialProof: {
-    trustedBy: ["Students", "Colleges", "Campus Ready", "Future"]
-  },
+
   problems: [
     { title: "Waiting in Queue", description: "Wasting hours standing in line at the print shop." },
     { title: "Expensive Printing", description: "Paying premium prices for basic academic prints." },
@@ -35,14 +33,10 @@ export const publicContent = {
     { question: "How long does delivery take?", answer: "Most orders are delivered within 1-2 hours depending on campus volume." },
     { question: "Can I print in color?", answer: "Yes! You can choose between Black & White or Full Color printing." },
     { question: "What formats can I upload?", answer: "Currently, we support PDF files to ensure formatting stays perfect." },
-    { question: "Can I cancel my order?", answer: "Orders can be canceled within the first 5 minutes before the vendor starts printing." },
-    { question: "Can faculty use it?", answer: "Absolutely. Faculty members get access to priority printing channels." },
-    { question: "Can clubs print posters?", answer: "Yes, we support A3 and poster printing for campus events." },
-    { question: "Can I reorder?", answer: "Yes, all your past documents are saved securely for 1-click reordering." },
     { question: "Is my payment secure?", answer: "We use bank-level encryption and secure payment gateways (Razorpay/Stripe)." },
-    { question: "How do I become a print partner?", answer: "Visit our Contact page and fill out the Print Partner inquiry form." },
     { question: "Is there a minimum order?", answer: "No minimum order required. Print a single page or an entire textbook." },
-    { question: "What if there is a mistake in my print?", answer: "We offer a 100% reprint guarantee if the vendor makes an error." }
+    { question: "What if there is a mistake in my print?", answer: "We offer a 100% reprint guarantee if the vendor makes an error." },
+    { question: "How do I become a print partner?", answer: "Visit our Contact page and fill out the Print Partner inquiry form." }
   ],
   statistics: [
     { label: "Students", value: 5000 },

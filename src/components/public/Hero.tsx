@@ -20,7 +20,7 @@ export function Hero() {
   const { badge, heading, headingHighlight, subheading, primaryCTA, secondaryCTA } = publicContent.hero;
 
   return (
-    <section className="relative min-h-[100dvh] pt-32 pb-20 overflow-hidden flex items-center bg-gray-50/50">
+    <section className="relative min-h-[90dvh] pt-28 pb-16 overflow-hidden flex items-center bg-gray-50/50">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
@@ -49,9 +49,6 @@ export function Hero() {
             animate="show"
             className="flex flex-col items-start text-left"
           >
-            <motion.div variants={fadeInUp} className="inline-flex items-center rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 text-sm font-semibold text-orange-600 mb-6 shadow-sm">
-              {badge}
-            </motion.div>
             
             <motion.div variants={fadeInUp} className="mb-6">
               <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-[1.1]">

@@ -15,7 +15,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <SectionContainer className="bg-gray-50/50">
+    <SectionContainer id="how-it-works" className="bg-gray-50/50">
       <SectionHeading 
         badge="How It Works"
         title="Four Steps to Freedom." 

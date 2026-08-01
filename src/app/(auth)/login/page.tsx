@@ -9,6 +9,9 @@ import Link from 'next/link';
 import { loginSchema, LoginFormData } from '@/features/auth/validators/authValidators';
 import { authService } from '@/features/auth/services/authService';
 import { AuthLayout } from '@/features/auth/components/AuthLayout';
+import { TextInput } from '@/design-system/components/inputs/TextInput/TextInput';
+import { PasswordInput } from '@/design-system/components/inputs/PasswordInput/PasswordInput';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,11 +23,11 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    if (isLoading) return;
     setIsLoading(true);
     setError(null);
     try {
       await authService.signInWithEmail(data);
-      // Let the middleware / layout handle routing to app/home or onboarding
       window.location.href = '/app/home';
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
@@ -33,6 +36,7 @@ export default function LoginPage() {
   };
 
   const onGoogleLogin = async () => {
+    if (isLoading) return;
     try {
       await authService.loginWithGoogle();
     } catch (err: any) {
@@ -43,27 +47,28 @@ export default function LoginPage() {
   return (
     <AuthLayout>
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
         className="w-full bg-white p-8 rounded-3xl"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-primary mb-2">
-            BLINTZY
+          <h1 className="text-3xl font-black text-gray-900 mb-2">
+            Welcome to BLINTZY
           </h1>
-          <p className="text-muted-foreground text-sm">Sign in to manage your academic life</p>
+          <p className="text-gray-500 text-sm">Sign in to manage your academic life</p>
         </div>
 
         {error && (
-          <div className="mb-4 p-4 bg-destructive/10 text-destructive rounded-lg text-sm text-center">
+          <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-xl text-sm text-center border border-red-100">
             {error}
           </div>
         )}
 
         <button 
           onClick={onGoogleLogin}
-          className="w-full border border-border bg-white text-black py-3 rounded-xl font-bold mb-6 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
+          disabled={isLoading}
+          className="w-full border border-gray-200 bg-white text-gray-700 py-3 rounded-xl font-bold mb-6 flex items-center justify-center gap-2 hover:bg-gray-50 hover:shadow-sm active:scale-[0.98] transition-all disabled:opacity-50"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -75,49 +80,50 @@ export default function LoginPage() {
         </button>
 
         <div className="relative flex items-center py-2 mb-6">
-          <div className="flex-grow border-t border-border"></div>
-          <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs uppercase tracking-wider font-semibold">Or email</span>
-          <div className="flex-grow border-t border-border"></div>
+          <div className="flex-grow border-t border-gray-100"></div>
+          <span className="flex-shrink-0 mx-4 text-gray-400 text-xs uppercase tracking-widest font-semibold">Or Email</span>
+          <div className="flex-grow border-t border-gray-100"></div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <input 
-              {...register("email")}
-              type="email"
-              placeholder="Email address"
-              className="w-full p-3 bg-secondary/50 rounded-xl border border-border focus:border-primary outline-none transition-all"
-            />
-            {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
-          </div>
-          <div>
-            <input 
-              {...register("password")}
-              type="password"
-              placeholder="Password"
-              className="w-full p-3 bg-secondary/50 rounded-xl border border-border focus:border-primary outline-none transition-all"
-            />
-            {errors.password && <p className="text-xs text-destructive mt-1">{errors.password.message}</p>}
-          </div>
-          
-          <div className="flex justify-end">
-            <Link href="/forgot-password" className="text-xs text-primary font-medium hover:underline">
-              Forgot password?
-            </Link>
-          </div>
+          <fieldset disabled={isLoading} className="space-y-4">
+            <div>
+              <TextInput 
+                {...register("email")}
+                type="email"
+                variant="floating"
+                label="Email address"
+              />
+              {errors.email && <p className="text-xs text-red-500 mt-1.5 ml-1">{errors.email.message}</p>}
+            </div>
+            <div>
+              <PasswordInput 
+                {...register("password")}
+                variant="floating"
+                label="Password"
+              />
+              {errors.password && <p className="text-xs text-red-500 mt-1.5 ml-1">{errors.password.message}</p>}
+            </div>
+            
+            <div className="flex justify-end pt-1">
+              <Link href="/forgot-password" className="text-sm text-orange-500 font-semibold hover:text-orange-600 transition-colors">
+                Forgot password?
+              </Link>
+            </div>
 
-          <button 
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold shadow-glow disabled:opacity-50 transition-all hover:bg-primary/90"
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </button>
+            <button 
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-12 bg-orange-500 text-white rounded-xl font-bold shadow-sm disabled:opacity-70 transition-all hover:bg-orange-600 active:scale-[0.98] flex items-center justify-center"
+            >
+              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign In"}
+            </button>
+          </fieldset>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground mt-8">
+        <p className="text-center text-sm text-gray-500 mt-8">
           Don't have an account?{' '}
-          <Link href="/signup" className="text-primary font-bold hover:underline">
+          <Link href="/signup" className="text-orange-500 font-bold hover:text-orange-600 transition-colors">
             Sign up
           </Link>
         </p>

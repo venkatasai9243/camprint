@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 interface PageTransitionProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface PageTransitionProps {
 }
 
 export const PageTransition = ({ children, mode = 'slide', className = '' }: PageTransitionProps) => {
-  const variants = {
+  const variants: Record<string, Variants> = {
     slide: {
       initial: { opacity: 0, x: 20 },
       animate: { opacity: 1, x: 0, transition: { duration: 0.25, ease: 'easeOut' } },

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { Navbar } from '@/components/public/Navbar';
 import { Hero } from '@/components/public/Hero';
-import { SocialProof } from '@/components/public/SocialProof';
 import { ProblemSection } from '@/components/public/ProblemSection';
 import { SolutionFlow } from '@/components/public/SolutionFlow';
 import { InteractiveDemo } from '@/components/public/InteractiveDemo';
@@ -15,7 +14,6 @@ import { Statistics } from '@/components/public/Statistics';
 import { Testimonials } from '@/components/public/Testimonials';
 import { FAQ } from '@/components/public/FAQ';
 import { About } from '@/components/public/About';
-import { FutureVision } from '@/components/public/FutureVision';
 import { CTA } from '@/components/public/CTA';
 import { Footer } from '@/components/public/Footer';
 
@@ -37,7 +35,6 @@ export default function LandingPage() {
       <Navbar />
       <main>
         <Hero />
-        <SocialProof />
         <ProblemSection />
         <SolutionFlow />
         <InteractiveDemo />
@@ -51,7 +48,6 @@ export default function LandingPage() {
         <Testimonials />
         <FAQ />
         <About />
-        <FutureVision />
         <CTA />
       </main>
       <Footer />

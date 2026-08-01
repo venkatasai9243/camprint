@@ -27,7 +27,7 @@ export function FAQ() {
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeInUp}
-        className="max-w-3xl mx-auto flex flex-col gap-4"
+        className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 items-start"
       >
         {publicContent.faq.map((item, i) => (
           <div 
