@@ -7,6 +7,15 @@ export const publicContent = {
     primaryCTA: "Start Printing",
     secondaryCTA: "Watch Demo"
   },
+  socialProof: {
+    trustedBy: [
+      "Stanford University",
+      "MIT",
+      "Harvard University",
+      "UC Berkeley",
+      "Oxford University"
+    ]
+  },
 
   problems: [
     { title: "Waiting in Queue", description: "Wasting hours standing in line at the print shop." },
