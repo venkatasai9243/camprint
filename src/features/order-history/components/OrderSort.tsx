@@ -13,13 +13,12 @@ export const OrderSort = () => {
 
   return (
     <>
-      <div className="px-4 pb-2 flex justify-end">
+      <div className="px-4 pb-2 pt-3 flex justify-end shrink-0">
         <button 
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-3 py-1.5 rounded-full"
+          className="flex items-center justify-center w-10 h-10 text-gray-500 hover:text-gray-900 transition-colors bg-gray-50 border border-gray-200 hover:bg-gray-100 rounded-[14px]"
         >
-          <ArrowUpDown className="w-3.5 h-3.5" />
-          {currentLabel}
+          <ArrowUpDown className="w-5 h-5" strokeWidth={1.5} />
         </button>
       </div>
 

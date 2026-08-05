@@ -9,20 +9,39 @@ export function BottomNavigation() {
   const tabs = Object.values(APP_ROUTES);
 
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 flex h-[72px] w-full max-w-[430px] items-center justify-around border-t border-border bg-background pb-[env(safe-area-inset-bottom)]">
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 flex h-[80px] w-full max-w-[430px] items-center justify-around border-t border-gray-100 bg-white/95 backdrop-blur-md pb-[calc(env(safe-area-inset-bottom)+8px)] px-2">
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
         const Icon = tab.icon!;
         return (
-          <Link key={tab.path} href={tab.path} className="relative flex h-full flex-1 flex-col items-center justify-center gap-1 text-muted-foreground hover:text-foreground" aria-label={tab.title} aria-current={isActive ? 'page' : undefined}>
-            {isActive && <motion.div layoutId="nav-indicator" className="absolute top-1 w-12 h-8 rounded-full bg-primary/10" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />}
-            {tab.path === '/app/notifications' ? (
-              <NotificationBadge className={`h-5 w-5 relative z-10 ${isActive ? 'text-primary' : ''}`} iconOnly />
-            ) : (
-              <Icon className={`h-5 w-5 relative z-10 ${isActive ? 'text-primary' : ''}`} />
-            )}
-            <span className={`text-[10px] font-medium relative z-10 ${isActive ? 'text-primary' : ''}`}>{tab.title}</span>
-          </Link>
+          <motion.div
+            key={tab.path}
+            whileTap={{ scale: 0.92 }}
+            className="flex h-full flex-1 touch-manipulation"
+          >
+            <Link 
+              href={tab.path} 
+              className="relative flex h-full flex-1 flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900"
+              aria-label={tab.title}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {isActive && (
+                <motion.div 
+                  layoutId="nav-indicator" 
+                  className="absolute top-2 w-14 h-9 rounded-full bg-orange-50" 
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }} 
+                />
+              )}
+              {tab.path === '/app/notifications' ? (
+                <NotificationBadge className={`h-6 w-6 relative z-10 transition-colors ${isActive ? 'text-orange-500' : ''}`} iconOnly />
+              ) : (
+                <Icon className={`h-6 w-6 relative z-10 transition-colors ${isActive ? 'text-orange-500' : ''}`} />
+              )}
+              <span className={`text-[10px] font-bold relative z-10 transition-colors ${isActive ? 'text-orange-500' : 'font-medium'}`}>
+                {tab.title}
+              </span>
+            </Link>
+          </motion.div>
         );
       })}
     </nav>

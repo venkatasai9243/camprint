@@ -10,19 +10,27 @@ export const OrderHistoryEmptyState = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center min-h-[60vh]">
-      <div className="w-24 h-24 rounded-full bg-primary/5 flex items-center justify-center mb-6 text-primary">
-        <PackageSearch className="w-12 h-12" />
+      <div className="w-24 h-24 rounded-full bg-gray-50 flex items-center justify-center mb-6 shadow-sm border border-gray-100">
+        <span className="text-[40px]">📄</span>
       </div>
-      <h3 className="text-2xl font-bold text-foreground mb-2">No Orders Yet</h3>
-      <p className="text-sm text-muted-foreground mb-8 max-w-[280px]">
-        You haven&apos;t placed any printing orders with Blintzy yet. Your complete order history will appear here.
+      <h3 className="text-[20px] font-black text-gray-900 mb-2 tracking-tight">No print history yet</h3>
+      <p className="text-[14px] font-medium text-gray-500 mb-8 max-w-[280px]">
+        Your completed print orders will appear here.
       </p>
-      <Button 
-        onClick={() => router.push(APP_ROUTES.HOME)} 
-        className="w-full max-w-[240px] bg-primary text-primary-foreground font-bold rounded-xl py-4 shadow-md hover:shadow-lg transition-all hover:scale-[1.02]"
-      >
-        Start Printing
-      </Button>
+      <div className="flex flex-col w-full gap-3 max-w-[240px]">
+        <Button 
+          onClick={() => router.push(APP_ROUTES.HOME)} 
+          className="w-full bg-[#FF6B00] text-white font-bold rounded-[18px] py-4 h-[56px] shadow-[0_8px_30px_rgba(255,107,0,0.2)] hover:scale-[1.02] transition-transform"
+        >
+          Start Printing
+        </Button>
+        <Button 
+          onClick={() => router.push(APP_ROUTES.SERVICES.MANUALS)} 
+          className="w-full bg-gray-50 text-gray-700 font-bold border border-gray-200 rounded-[18px] py-4 h-[56px] hover:bg-gray-100 transition-colors"
+        >
+          Browse Manuals
+        </Button>
+      </div>
     </div>
   );
 };

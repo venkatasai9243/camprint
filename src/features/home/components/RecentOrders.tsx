@@ -10,13 +10,29 @@ interface RecentOrdersProps {
 export const RecentOrders = ({ orders }: RecentOrdersProps) => {
   if (!orders || orders.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 bg-card border border-border border-dashed rounded-xl text-center gap-3">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+      <div className="flex flex-col items-center justify-center p-6 bg-white border border-gray-100 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.05)] text-center">
+        <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-3 overflow-hidden">
+          <span className="text-[52px] block translate-y-1">🖨️</span>
         </div>
-        <p className="font-semibold text-foreground">No orders yet</p>
-        <p className="text-sm text-muted-foreground max-w-[200px]">Start your first print to see your history here.</p>
-        <Button className="mt-2" onClick={() => window.location.href = '/app/services'}>Explore Services</Button>
+        <h4 className="font-bold text-gray-900 text-[18px] mb-1">You're all caught up 🎉</h4>
+        <p className="text-[13px] text-gray-500 max-w-[220px] leading-tight mb-5">Your completed print orders will appear here.</p>
+        
+        <hr className="w-full border-gray-100 mb-5" />
+        
+        <div className="flex flex-col gap-2.5 w-full">
+          <button 
+            className="w-full h-[52px] bg-[#FF6B00] text-white rounded-[18px] font-bold text-sm hover:scale-[0.98] transition-transform flex items-center justify-center gap-2 shadow-md shadow-orange-500/20" 
+            onClick={() => window.location.href = '/app/services'}
+          >
+            Start Printing <span className="text-lg">→</span>
+          </button>
+          <button 
+            className="w-full h-[52px] bg-white border border-gray-200 text-gray-900 rounded-[18px] font-bold text-sm hover:scale-[0.98] hover:bg-gray-50 transition-all flex items-center justify-center gap-2" 
+            onClick={() => window.location.href = '/app/services/manuals'}
+          >
+            Browse Manuals <span className="text-lg">→</span>
+          </button>
+        </div>
       </div>
     );
   }

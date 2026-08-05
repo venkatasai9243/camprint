@@ -8,10 +8,27 @@ import { RecentOrders } from '@/features/home/components/RecentOrders';
 import { SupportCard } from '@/features/home/components/SupportCard';
 import { WidgetSkeleton, CurrentOrderSkeleton } from '@/features/home/components/HomeSkeleton';
 import { DashboardEntry } from '@/features/home/components/DashboardEntry';
+import { PromoBanners } from '@/features/home/components/PromoBanners';
+import { BusTrackingCard } from '@/features/home/components/BusTrackingCard';
 
 // In a real app, these would be separate async data fetching functions per widget
-import { MOCK_CURRENT_ORDER, MOCK_QUICK_SERVICES, MOCK_ANNOUNCEMENTS, MOCK_SUPPORT_ACTIONS } from '@/features/home/mock/dashboardData';
+import { MOCK_ACTIVE_ORDERS, MOCK_QUICK_SERVICES, MOCK_ANNOUNCEMENTS, MOCK_SUPPORT_ACTIONS } from '@/features/home/mock/dashboardData';
 import { mapCurrentOrder, mapQuickService, mapAnnouncement, mapSupportAction } from '@/features/home/mappers';
+
+const SectionHeader = ({ title, actionLabel, href }: { title: string, actionLabel?: string, href?: string }) => (
+  <div className="flex justify-between items-end mb-3 px-1">
+    <h2 className="text-[18px] font-bold text-gray-900 leading-none">{title}</h2>
+    {actionLabel && (
+      <a 
+        href={href || '#'}
+        className="text-orange-500 font-bold text-[13px] flex items-center group active:text-orange-600 transition-colors"
+      >
+        <span className="leading-none">{actionLabel}</span>
+        <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    )}
+  </div>
+);
 
 export default async function HomeDashboard() {
   // Simulate backend-driven widget ordering
@@ -19,11 +36,23 @@ export default async function HomeDashboard() {
 
   const renderWidget = (widgetId: string) => {
     switch (widgetId) {
+      case 'promo_banners':
+        return (
+          <section className="mb-2">
+            <PromoBanners />
+          </section>
+        );
+      case 'bus_tracking':
+        return (
+          <section className="mb-2">
+            <BusTrackingCard />
+          </section>
+        );
       case 'current_order':
         return (
           <Suspense fallback={<CurrentOrderSkeleton />}>
-            <section className="px-4">
-              <CurrentOrderHero order={MOCK_CURRENT_ORDER.data ? mapCurrentOrder(MOCK_CURRENT_ORDER.data) : null} />
+            <section>
+              <CurrentOrderHero orders={MOCK_ACTIVE_ORDERS.data.map(mapCurrentOrder)} />
             </section>
           </Suspense>
         );
@@ -31,7 +60,7 @@ export default async function HomeDashboard() {
         return (
           <Suspense fallback={<WidgetSkeleton />}>
             <section className="px-4">
-              <h2 className="text-lg font-semibold mb-4">Quick Services</h2>
+              <SectionHeader title="Quick Services" actionLabel="View All" href="/app/services" />
               <QuickServicesGrid services={MOCK_QUICK_SERVICES.data.map(mapQuickService)} />
             </section>
           </Suspense>
@@ -39,8 +68,8 @@ export default async function HomeDashboard() {
       case 'todays_highlights':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="pl-4">
-              <h2 className="text-lg font-semibold mb-4">Today's Highlights</h2>
+            <section className="px-4">
+              <SectionHeader title="Today's Highlights" />
               <TodaysHighlights highlights={[]} /> {/* Empty for now to show fallback/empty states */}
             </section>
           </Suspense>
@@ -48,8 +77,8 @@ export default async function HomeDashboard() {
       case 'announcements':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="pl-4">
-              <h2 className="text-lg font-semibold mb-4">Announcements</h2>
+            <section className="px-4">
+              <SectionHeader title="Announcements" actionLabel="See All" href="/app/announcements" />
               <AnnouncementCarousel announcements={MOCK_ANNOUNCEMENTS.data.map(mapAnnouncement)} />
             </section>
           </Suspense>
@@ -58,7 +87,7 @@ export default async function HomeDashboard() {
         return (
           <Suspense fallback={<WidgetSkeleton />}>
             <section className="px-4">
-              <h2 className="text-lg font-semibold mb-4">Recent Orders</h2>
+              <SectionHeader title="Recent Orders" actionLabel="History" href="/app/orders" />
               <RecentOrders orders={[]} />
             </section>
           </Suspense>
@@ -79,7 +108,7 @@ export default async function HomeDashboard() {
 
   return (
     <DashboardEntry>
-      <div className="flex flex-col gap-6 w-full pb-24">
+      <div className="flex flex-col gap-5 w-full">
         {/* Backend-Driven Widget Layout Engine */}
         {activeWidgets.map(widget => (
           <React.Fragment key={widget.id}>

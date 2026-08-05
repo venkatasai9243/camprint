@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { OrderActionsMenu } from '@/features/order-history/components/OrderActionsMenu';
 
 interface OrderHeaderProps {
   orderId: string;
@@ -23,9 +24,12 @@ export const OrderHeader = ({ orderId }: OrderHeaderProps) => {
           <h1 className="text-base font-bold leading-tight truncate max-w-[200px]">{orderId}</h1>
         </div>
       </div>
-      <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted active:scale-95 transition-transform">
-        <MoreVertical className="w-5 h-5 text-foreground" />
-      </button>
+      <div className="relative">
+        <OrderActionsMenu 
+          orderId={orderId} 
+          onDownloadInvoice={() => router.push(`/app/orders/history/invoice/${orderId}`)} 
+        />
+      </div>
     </header>
   );
 };

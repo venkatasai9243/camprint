@@ -20,6 +20,17 @@ export const DashboardEntry: React.FC<DashboardEntryProps> = ({ children }) => {
   const yearName = academicRecord?.academic_years?.name || "";
   const yearNumber = parseInt(yearName.replace(/[^0-9]/g, '') || '1') || 1;
   const section = academicRecord?.sections?.name || "A";
+  const semester = (yearNumber - 1) * 2 + 1; // Basic heuristic
+  
+  const [greeting, setGreeting] = useState('Good Morning');
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setGreeting(hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening');
+    const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+    setFormattedDate(new Date().toLocaleDateString('en-US', dateOptions));
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -73,10 +84,10 @@ export const DashboardEntry: React.FC<DashboardEntryProps> = ({ children }) => {
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         {!showWelcomeCard && (
-          <section className="px-4 pt-6">
-            <h1 className="text-2xl font-bold">Good Morning 👋</h1>
-            <p className="text-lg text-gray-500">{studentName}</p>
-            <p className="mt-1 text-sm text-orange-500 font-medium">Campus Printing. Delivered Smarter.</p>
+          <section className="px-5 pt-8">
+            <h1 className="text-xl font-bold text-gray-900 leading-tight">{greeting} 👋</h1>
+            <p className="text-lg font-bold text-gray-900 leading-tight">{studentName}</p>
+            <p className="mt-1 text-sm text-gray-500">Welcome back.</p>
           </section>
         )}
 

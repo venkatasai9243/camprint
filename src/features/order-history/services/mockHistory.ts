@@ -3,39 +3,17 @@ import { OrderHistoryItem, Invoice } from '../types';
 import { OrderStatus } from '@/features/orders/types';
 import { generateInvoiceNumber } from '../utils/formatters';
 
-const generateMockOrders = (count: number): OrderHistoryItem[] => {
-  const statuses: OrderStatus[] = ['delivered', 'cancelled', 'refunded', 'pending', 'printing', 'binding', 'ready_for_pickup'];
-  const subjects = ['Software Engineering', 'Data Structures', 'Operating Systems', 'Computer Networks', 'Machine Learning'];
-  const types = ['Lab Manual', 'Notes', 'Assignment', 'Project Report'];
-
-  return Array.from({ length: count }).map(() => {
-    const id = `ORD-${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`;
-    const date = new Date();
-    date.setDate(date.getDate() - Math.floor(Math.random() * 180)); // past 6 months
-    
-    const docNames = [
-      `${subjects[Math.floor(Math.random() * subjects.length)]} ${types[Math.floor(Math.random() * types.length)]}`
-    ];
-    if (Math.random() > 0.7) {
-      docNames.push(`${subjects[Math.floor(Math.random() * subjects.length)]} ${types[Math.floor(Math.random() * types.length)]}`);
-    }
-
-    const status = statuses[Math.floor(Math.random() * statuses.length)];
-
-    return {
-      id,
-      documentNames: docNames,
-      createdAt: date.toISOString(),
-      status,
-      totalCopies: Math.floor(Math.random() * 5) + 1,
-      totalPages: Math.floor(Math.random() * 200) + 10,
-      totalAmount: Math.floor(Math.random() * 500) + 50,
-      deliveryDate: status === 'delivered' ? new Date(date.getTime() + 86400000 * 2).toISOString() : undefined,
-    };
-  }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-};
-
-export const MOCK_HISTORY_ORDERS = generateMockOrders(45);
+export const MOCK_HISTORY_ORDERS: OrderHistoryItem[] = [
+  {
+    id: 'ORD-2236-3159',
+    documentNames: ['Computer Networks Lab Manual'],
+    createdAt: '2026-07-29T10:00:00.000Z',
+    status: 'printing',
+    totalCopies: 1,
+    totalPages: 100,
+    totalAmount: 180,
+  }
+];
 
 export const getMockInvoice = (orderId: string): Invoice => {
   const order = MOCK_HISTORY_ORDERS.find(o => o.id === orderId) || MOCK_HISTORY_ORDERS[0];

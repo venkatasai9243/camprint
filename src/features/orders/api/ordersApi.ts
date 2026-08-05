@@ -12,11 +12,53 @@ export const ordersApi = {
   
   getOrderById: async (id: string): Promise<Order> => {
     await delay(600);
-    const order = MOCK_ORDERS.find(o => o.id === id);
-    if (!order) {
-      throw new Error('Order not found');
-    }
-    return order;
+      // For V2.2 prototype: synthetically generate an order so track order screen doesn't crash on history items
+      return {
+        id: 'ORD-2236-3159',
+        userId: 'user-123',
+        status: 'printing',
+        createdAt: '2026-07-29T10:00:00.000Z',
+        updatedAt: new Date(Date.now() - 1800000).toISOString(),
+        items: [
+          {
+            id: 'item-1',
+            orderId: 'ORD-2236-3159',
+            printConfig: {
+              documentName: 'Computer Networks Lab Manual',
+              manualName: 'CS-401 CN Lab',
+              copies: 1,
+              pages: 100,
+              paperSize: 'a4',
+              color: false,
+              bindingType: 'spiral',
+              singleSided: false,
+              studentNotes: 'Please make sure binding is strong'
+            },
+            price: 180
+          }
+        ],
+        deliveryInfo: {
+          deliveryType: 'classroom',
+          classroom: 'CS-302',
+          department: 'Computer Science',
+          building: 'Block A',
+          floor: '3rd Floor',
+          roomNumber: '302',
+          estimatedArrival: new Date(Date.now() + 7200000).toISOString(),
+          deliveryInstructions: 'Call me when you reach the building'
+        },
+        summary: {
+          printingCost: 100,
+          bindingCost: 35,
+          paperCost: 0,
+          colorCost: 0,
+          platformFee: 10,
+          gst: 35,
+          discount: 0,
+          grandTotal: 180
+        },
+        timeline: []
+      };
   },
 
   cancelOrder: async (id: string): Promise<{ status: OrderStatus }> => {

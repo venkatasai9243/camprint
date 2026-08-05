@@ -19,8 +19,10 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>(
     return (
       <motion.div
         ref={ref}
-        className={cn("min-h-[44px] flex items-center justify-center rounded-md", className)}
+        className={cn("min-h-[52px] h-[52px] flex items-center justify-center rounded-[18px]", className)}
         {...motionPresets.fade}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.12 }}
         {...props}
       >
         {isLoading ? "Loading..." : props.children}

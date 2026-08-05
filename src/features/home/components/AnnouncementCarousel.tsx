@@ -1,39 +1,72 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Announcement } from '../types';
-import { Badge } from '@/design-system/components/common/Badge/Badge';
+import { Bell, Printer, Ticket } from 'lucide-react';
 
 interface CarouselProps {
   announcements: Announcement[];
 }
 
 export const AnnouncementCarousel = ({ announcements }: CarouselProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!announcements || announcements.length <= 1) return;
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollRef.current.scrollBy({ left: clientWidth * 0.85, behavior: 'smooth' });
+        }
+      }
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [announcements]);
+
   if (!announcements || announcements.length === 0) return null;
 
   return (
-    <div className="flex overflow-x-auto gap-4 pb-4 snap-x hide-scrollbar">
-      {announcements.map((ann) => (
+    <div 
+      ref={scrollRef}
+      className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory hide-scrollbar"
+    >
+      {announcements.map((ann, i) => (
         <div 
           key={ann.id} 
-          className="w-[85%] max-w-[320px] snap-center p-5 bg-card border border-border rounded-xl shadow-sm shrink-0 flex flex-col gap-2"
+          className="w-[85%] max-w-[320px] h-[130px] snap-center p-4 bg-white border border-gray-100 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.05)] shrink-0 flex justify-between relative overflow-hidden"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <Badge >
-              {ann.category}
-            </Badge>
-            {ann.pinned && (
-              <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
-                Pinned
+          <div className="flex flex-col justify-between h-full z-10 w-[75%]">
+            <div className="flex flex-col gap-1.5">
+              <span className={`self-start px-2 py-0.5 text-[9px] font-black rounded-md uppercase tracking-wider ${ann.category === 'URGENT' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
+                {ann.category}
               </span>
+              <div>
+                <h4 className="font-bold text-[15px] text-gray-900 leading-tight mb-0.5 line-clamp-1">{ann.title}</h4>
+                {(ann as any).description && (
+                  <p className="text-[13px] text-gray-500 line-clamp-1">{(ann as any).description}</p>
+                )}
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3 mt-1">
+              {ann.ctaButtonText && (
+                <a href={ann.ctaButtonLink || '#'} className="text-[13px] font-bold text-orange-500 hover:text-orange-600 group">
+                  {ann.ctaButtonText} <span className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+                </a>
+              )}
+              <span className="text-[11px] font-medium text-gray-400">{(ann as any).timestamp}</span>
+            </div>
+          </div>
+          
+          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center opacity-50 pointer-events-none">
+            {i % 2 === 0 ? (
+              <Ticket className="w-10 h-10 text-gray-400 transform -rotate-12 absolute top-4 right-6" strokeWidth={1.5} />
+            ) : (
+              <Printer className="w-10 h-10 text-gray-400 transform rotate-12 absolute top-4 right-6" strokeWidth={1.5} />
             )}
           </div>
-          <h4 className="font-bold text-foreground">{ann.title}</h4>
-          {ann.ctaButtonText && (
-            <a href={ann.ctaButtonLink || '#'} className="mt-2 text-sm font-semibold text-primary hover:underline">
-              {ann.ctaButtonText} &rarr;
-            </a>
-          )}
         </div>
       ))}
     </div>

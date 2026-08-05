@@ -2,27 +2,27 @@ import { Order } from '../types';
 
 export const MOCK_ORDERS: Order[] = [
   {
-    id: 'ORD-8923-4412',
+    id: 'ORD-2236-3159',
     userId: 'user-123',
     status: 'printing',
-    createdAt: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-    updatedAt: new Date(Date.now() - 1800000).toISOString(), // 30 mins ago
+    createdAt: '2026-07-29T10:00:00.000Z',
+    updatedAt: new Date(Date.now() - 1800000).toISOString(),
     items: [
       {
         id: 'item-1',
-        orderId: 'ORD-8923-4412',
+        orderId: 'ORD-2236-3159',
         printConfig: {
-          documentName: 'Data Structures Lab Manual',
-          manualName: 'CS-301 DSA Lab',
+          documentName: 'Computer Networks Lab Manual',
+          manualName: 'CS-401 CN Lab',
           copies: 1,
-          pages: 120,
+          pages: 100,
           paperSize: 'a4',
           color: false,
           bindingType: 'spiral',
           singleSided: false,
           studentNotes: 'Please make sure binding is strong'
         },
-        price: 240
+        price: 180
       }
     ],
     deliveryInfo: {
@@ -32,18 +32,18 @@ export const MOCK_ORDERS: Order[] = [
       building: 'Block A',
       floor: '3rd Floor',
       roomNumber: '302',
-      estimatedArrival: new Date(Date.now() + 7200000).toISOString(), // 2 hours from now
+      estimatedArrival: new Date(Date.now() + 7200000).toISOString(),
       deliveryInstructions: 'Call me when you reach the building'
     },
     summary: {
-      printingCost: 180,
-      bindingCost: 50,
+      printingCost: 100,
+      bindingCost: 35,
       paperCost: 0,
       colorCost: 0,
       platformFee: 10,
-      gst: 43.2, // 18% of 240
+      gst: 35,
       discount: 0,
-      grandTotal: 283.2
+      grandTotal: 180
     },
     timeline: [
       {
@@ -51,7 +51,7 @@ export const MOCK_ORDERS: Order[] = [
         status: 'received',
         title: 'Order Received',
         description: 'We have received your order.',
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
+        timestamp: '2026-07-29T10:00:00.000Z',
         updatedBy: 'system',
         isCurrentStage: false
       },
@@ -60,7 +60,7 @@ export const MOCK_ORDERS: Order[] = [
         status: 'accepted',
         title: 'Order Accepted',
         description: 'Vendor has accepted the order and will start processing soon.',
-        timestamp: new Date(Date.now() - 3000000).toISOString(),
+        timestamp: '2026-07-29T10:30:00.000Z',
         updatedBy: 'vendor',
         isCurrentStage: false
       },

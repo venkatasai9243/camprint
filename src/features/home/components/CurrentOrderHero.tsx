@@ -1,54 +1,113 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CurrentOrder } from '../types';
 import { OrderProgressTimeline } from './OrderProgressTimeline';
-import { Button } from '@/design-system/components/buttons/Button/Button';
 import { WidgetEmptyState } from './HomeEmptyState';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText } from 'lucide-react';
 
 interface CurrentOrderHeroProps {
-  order: CurrentOrder | null;
+  orders: CurrentOrder[] | null;
   onTrackOrder?: (id: string) => void;
 }
 
-export const CurrentOrderHero = ({ order, onTrackOrder }: CurrentOrderHeroProps) => {
-  if (!order) {
+export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps) => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!orders || orders.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % orders.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [orders]);
+
+  if (!orders || orders.length === 0) {
     return (
-      <WidgetEmptyState
-        title="No Active Orders"
-        description="Your print queue is empty."
-        actionLabel="Start Your First Print"
-      />
+      <div className="px-4">
+        <WidgetEmptyState
+          title="No Active Orders"
+          description="Your print queue is empty."
+          actionLabel="Start Your First Print"
+        />
+      </div>
     );
   }
 
+  const order = orders[current];
+
+  // Intelligently format ETA to fit on one line without truncation
+  let formattedEta = order.estimatedDeliveryTime || 'Calculating...';
+  if (formattedEta.includes('Tomorrow • ')) {
+    formattedEta = formattedEta.replace('Tomorrow • ', 'Tmrw • ');
+  } else if (formattedEta.includes('Today • ')) {
+    formattedEta = formattedEta.replace('Today • ', 'Today ');
+  }
+
   return (
-    <div className="w-full bg-card border border-border rounded-xl p-5 shadow-sm">
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex flex-col">
-          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{order.id}</span>
-          <h3 className="text-lg font-bold text-foreground leading-tight mt-1">{order.documentName}</h3>
-        </div>
-        <div className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full flex-shrink-0 whitespace-nowrap">
-          {order.status.replace(/([A-Z])/g, ' ').trim()}
-        </div>
+    <div className="w-full relative px-4">
+      <div className="relative overflow-hidden w-full rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 bg-white">
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={current}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            className="w-full px-5 py-4 flex flex-col h-[260px] justify-between"
+          >
+            {/* Status Chip */}
+            <div className="h-[20px] flex items-center mb-3">
+              <span className="text-[13px] font-bold text-orange-500 flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                {order.status === 'Printing' ? 'Printing' : 'Placed'}
+              </span>
+            </div>
+            
+            {/* Document Row */}
+            <div className="flex items-start gap-3 h-[80px] mb-2">
+              <FileText className="w-8 h-8 text-gray-400 mt-1 shrink-0" strokeWidth={1.5} />
+              <div className="flex flex-col flex-1 h-full min-w-0">
+                <h3 className="h-[52px] text-[22px] font-black text-gray-900 leading-tight line-clamp-2 overflow-hidden">{order.documentName}</h3>
+                <span className="h-[20px] text-[15px] font-medium text-gray-400 mt-auto flex items-end">Order #{order.id.replace('ORD-', '')}</span>
+              </div>
+            </div>
+
+            {/* Progress Section */}
+            <div className="h-[44px] flex flex-col justify-end mb-4">
+              <OrderProgressTimeline status={order.status} progress={order.progress} />
+            </div>
+
+            {/* Bottom Row */}
+            <div className="flex flex-row justify-between items-center mt-auto h-[48px] gap-2">
+              <div className="flex flex-col justify-center bg-gray-50 px-3 h-[48px] flex-1 rounded-[18px] min-w-[155px]">
+                <span className="text-[13px] font-medium text-gray-500 leading-none mb-1 tracking-tight">ETA</span>
+                <span className="text-[18px] font-semibold text-gray-900 leading-none whitespace-nowrap tracking-tight">{formattedEta}</span>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.12 }}
+                onClick={() => onTrackOrder?.(order.id)}
+                className="w-[150px] h-[48px] bg-[#FF6B00] text-white font-bold rounded-[18px] text-[15px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center"
+              >
+                Track Order
+              </motion.button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      <OrderProgressTimeline status={order.status} progress={order.progress} />
-
-      <div className="flex justify-between items-center mt-4 pt-4 border-t border-border">
-        <div className="flex flex-col">
-          <span className="text-xs text-muted-foreground">Estimated Arrival</span>
-          <span className="text-sm font-semibold">{order.estimatedDeliveryTime || 'Calculating...'}</span>
+      {orders.length > 1 && (
+        <div className="flex justify-center gap-1.5 mt-4">
+          {orders.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-5 bg-orange-500' : 'w-1.5 bg-gray-200'}`}
+            />
+          ))}
         </div>
-        <Button
-          onClick={() => onTrackOrder?.(order.id)}
-          className="px-6 py-2 bg-primary text-primary-foreground font-medium rounded-lg text-sm hover:bg-primary/90"
-        >
-          Track Order
-        </Button>
-      </div>
-
-      {/* Future feature placeholders for QR, Delivery Person, etc. will integrate here */}
+      )}
     </div>
   );
 };

@@ -27,7 +27,7 @@ export const OrderProgressTimeline = ({ status, progress }: TimelineProps) => {
   else if (['OutForDelivery', 'Delivered'].includes(status)) currentStageIndex = 3;
 
   return (
-    <div className="w-full flex flex-col gap-2 mt-4">
+    <div className="w-full flex flex-col gap-2">
       <div className="relative h-2 w-full bg-secondary rounded-full overflow-hidden">
         <motion.div
           className="absolute top-0 left-0 h-full bg-primary rounded-full"
