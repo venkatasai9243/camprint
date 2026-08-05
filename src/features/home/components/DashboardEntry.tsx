@@ -91,7 +91,7 @@ export const DashboardEntry: React.FC<DashboardEntryProps> = ({ children }) => {
           </section>
         )}
 
-        <div className="mt-6">
+        <div className="mt-2">
           {children}
         </div>
       </motion.div>

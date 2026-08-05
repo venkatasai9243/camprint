@@ -15,7 +15,7 @@ export const SupportCard = ({ actions }: SupportProps) => {
   return (
     <div className="flex flex-col gap-3 pb-8">
       <h2 className="font-bold text-[18px] text-gray-900 mb-2 px-1">Need Help?</h2>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         {actions.map((action, i) => {
           let subtitle = '24 Hour Reply';
           let icon = '✉️';
@@ -34,7 +34,7 @@ export const SupportCard = ({ actions }: SupportProps) => {
               onClick={() => {
                 if (action.enabled) window.open(action.actionUrl, '_blank');
               }}
-              className={`flex items-center justify-between bg-white border border-gray-100 rounded-[20px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.05)] group ${action.enabled ? 'cursor-pointer hover:border-gray-200' : 'opacity-50'}`}
+              className={`flex items-center justify-between bg-white border border-gray-100 rounded-[20px] px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.05)] group ${action.enabled ? 'cursor-pointer hover:border-gray-200' : 'opacity-50'}`}
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-[24px]">

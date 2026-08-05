@@ -13,7 +13,7 @@ const banners = [
     bg: 'bg-gradient-to-br from-[#FF6B00] to-[#E66000]',
     textColor: 'text-white',
     descColor: 'text-orange-100',
-    icon: <Clock className="w-24 h-24 text-white opacity-20 absolute -right-4 -bottom-4 transform -rotate-12" strokeWidth={1} />,
+    icon: <Clock className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-2 transform -rotate-12" strokeWidth={1} />,
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const banners = [
     bg: 'bg-gradient-to-br from-purple-600 to-purple-800',
     textColor: 'text-white',
     descColor: 'text-purple-200',
-    icon: <Ticket className="w-24 h-24 text-white opacity-20 absolute -right-2 -bottom-2 transform rotate-12" strokeWidth={1} />,
+    icon: <Ticket className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-1 transform rotate-12" strokeWidth={1} />,
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const banners = [
     bg: 'bg-gradient-to-br from-blue-600 to-blue-800',
     textColor: 'text-white',
     descColor: 'text-blue-200',
-    icon: <FileText className="w-24 h-24 text-white opacity-20 absolute -right-2 -bottom-4 transform -rotate-6" strokeWidth={1} />,
+    icon: <FileText className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-2 transform -rotate-6" strokeWidth={1} />,
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const banners = [
     bg: 'bg-gradient-to-br from-green-600 to-emerald-800',
     textColor: 'text-white',
     descColor: 'text-green-200',
-    icon: <BookOpen className="w-24 h-24 text-white opacity-20 absolute -right-2 -bottom-2 transform rotate-6" strokeWidth={1} />,
+    icon: <BookOpen className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-1 transform rotate-6" strokeWidth={1} />,
   },
 ];
 
@@ -58,8 +58,8 @@ export const PromoBanners = () => {
   }, []);
 
   return (
-    <div className="px-4">
-      <div className="relative overflow-hidden h-[170px] w-full rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 bg-white">
+    <div className="w-full">
+      <div className="relative overflow-hidden h-[160px] w-full rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 bg-white">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -79,14 +79,14 @@ export const PromoBanners = () => {
                 {banners[current].desc}
               </p>
               
-              <button className="mt-2 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform">
+              <button className="mt-1 -translate-y-1 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform">
                 {banners[current].cta}
               </button>
             </div>
           </motion.div>
         </AnimatePresence>
         
-        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2.5 z-20">
           {banners.map((_, i) => (
             <div
               key={i}

@@ -36,7 +36,7 @@ export const OrderProgressTimeline = ({ status, progress }: TimelineProps) => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
         />
       </div>
-      <div className="flex justify-between items-center text-xs mt-1">
+      <div className="flex justify-between items-center text-xs mt-2">
         {STATUS_STAGES.map((stage, idx) => {
           const isCompleted = idx <= currentStageIndex;
           return (

@@ -21,14 +21,14 @@ export function BottomNavigation() {
           >
             <Link 
               href={tab.path} 
-              className="relative flex h-full flex-1 flex-col items-center justify-center gap-1.5 text-gray-400 hover:text-gray-900"
+              className="relative flex h-full flex-1 flex-col items-center justify-center gap-1 text-gray-400 hover:text-gray-900 pb-1"
               aria-label={tab.title}
               aria-current={isActive ? 'page' : undefined}
             >
               {isActive && (
                 <motion.div 
                   layoutId="nav-indicator" 
-                  className="absolute top-2 w-14 h-9 rounded-full bg-orange-50" 
+                  className="absolute top-[6px] w-[60px] h-[36px] rounded-full bg-orange-50" 
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }} 
                 />
               )}

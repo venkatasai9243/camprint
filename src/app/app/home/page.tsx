@@ -38,13 +38,13 @@ export default async function HomeDashboard() {
     switch (widgetId) {
       case 'promo_banners':
         return (
-          <section className="mb-2">
+          <section>
             <PromoBanners />
           </section>
         );
       case 'bus_tracking':
         return (
-          <section className="mb-2">
+          <section>
             <BusTrackingCard />
           </section>
         );
@@ -59,7 +59,7 @@ export default async function HomeDashboard() {
       case 'quick_services':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="px-4">
+            <section>
               <SectionHeader title="Quick Services" actionLabel="View All" href="/app/services" />
               <QuickServicesGrid services={MOCK_QUICK_SERVICES.data.map(mapQuickService)} />
             </section>
@@ -68,7 +68,7 @@ export default async function HomeDashboard() {
       case 'todays_highlights':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="px-4">
+            <section>
               <SectionHeader title="Today's Highlights" />
               <TodaysHighlights highlights={[]} /> {/* Empty for now to show fallback/empty states */}
             </section>
@@ -77,7 +77,7 @@ export default async function HomeDashboard() {
       case 'announcements':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="px-4">
+            <section>
               <SectionHeader title="Announcements" actionLabel="See All" href="/app/announcements" />
               <AnnouncementCarousel announcements={MOCK_ANNOUNCEMENTS.data.map(mapAnnouncement)} />
             </section>
@@ -86,7 +86,7 @@ export default async function HomeDashboard() {
       case 'recent_orders':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="px-4">
+            <section>
               <SectionHeader title="Recent Orders" actionLabel="History" href="/app/orders" />
               <RecentOrders orders={[]} />
             </section>
@@ -95,7 +95,7 @@ export default async function HomeDashboard() {
       case 'support':
         return (
           <Suspense fallback={<WidgetSkeleton />}>
-            <section className="px-4">
+            <section>
               <SupportCard actions={MOCK_SUPPORT_ACTIONS.data.map(mapSupportAction)} />
             </section>
           </Suspense>
@@ -108,7 +108,7 @@ export default async function HomeDashboard() {
 
   return (
     <DashboardEntry>
-      <div className="flex flex-col gap-5 w-full">
+      <div className="flex flex-col gap-4 w-full">
         {/* Backend-Driven Widget Layout Engine */}
         {activeWidgets.map(widget => (
           <React.Fragment key={widget.id}>

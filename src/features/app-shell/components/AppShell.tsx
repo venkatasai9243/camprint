@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col bg-[#FF6B00] shadow-2xl relative overflow-hidden">
       {!isOnboarding && <AppHeader title={pageTitle} />}
       {!isOnboarding ? (
-        <main className="flex-1 w-full bg-white rounded-t-[44px] relative z-10 -mt-6 px-4 pt-6 pb-24">
+        <main className="flex-1 w-full bg-white rounded-t-[44px] relative z-10 -mt-6 px-3 pt-6 pb-24">
           {children}
         </main>
       ) : (

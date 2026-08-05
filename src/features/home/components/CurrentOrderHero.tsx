@@ -54,10 +54,10 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="w-full px-5 py-4 flex flex-col h-[260px] justify-between"
+            className="w-full px-4 py-3 flex flex-col h-[220px] justify-between"
           >
             {/* Status Chip */}
-            <div className="h-[20px] flex items-center mb-3">
+            <div className="h-[20px] flex items-center mb-1">
               <span className="text-[13px] font-bold text-orange-500 flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
                 {order.status === 'Printing' ? 'Printing' : 'Placed'}
@@ -65,31 +65,31 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
             </div>
             
             {/* Document Row */}
-            <div className="flex items-start gap-3 h-[80px] mb-2">
-              <FileText className="w-8 h-8 text-gray-400 mt-1 shrink-0" strokeWidth={1.5} />
+            <div className="flex items-start gap-3 h-[60px] mb-2">
+              <FileText className="w-7 h-7 text-gray-400 mt-0.5 shrink-0" strokeWidth={1.5} />
               <div className="flex flex-col flex-1 h-full min-w-0">
-                <h3 className="h-[52px] text-[22px] font-black text-gray-900 leading-tight line-clamp-2 overflow-hidden">{order.documentName}</h3>
-                <span className="h-[20px] text-[15px] font-medium text-gray-400 mt-auto flex items-end">Order #{order.id.replace('ORD-', '')}</span>
+                <h3 className="h-[44px] text-[18px] font-black text-gray-900 leading-tight line-clamp-2 overflow-hidden">{order.documentName}</h3>
+                <span className="h-[16px] text-[13px] font-medium text-gray-400 mt-auto flex items-end">Order #{order.id.replace('ORD-', '')}</span>
               </div>
             </div>
 
             {/* Progress Section */}
-            <div className="h-[44px] flex flex-col justify-end mb-4">
+            <div className="h-[40px] flex flex-col justify-end mb-3">
               <OrderProgressTimeline status={order.status} progress={order.progress} />
             </div>
 
             {/* Bottom Row */}
-            <div className="flex flex-row justify-between items-center mt-auto h-[48px] gap-2">
-              <div className="flex flex-col justify-center bg-gray-50 px-3 h-[48px] flex-1 rounded-[18px] min-w-[155px]">
-                <span className="text-[13px] font-medium text-gray-500 leading-none mb-1 tracking-tight">ETA</span>
-                <span className="text-[18px] font-semibold text-gray-900 leading-none whitespace-nowrap tracking-tight">{formattedEta}</span>
+            <div className="flex flex-row justify-between items-center mt-auto h-[44px] gap-2">
+              <div className="flex flex-row items-center justify-between bg-gray-50 px-3 h-[44px] flex-1 rounded-[16px] min-w-[140px]">
+                <span className="text-[12px] font-medium text-gray-500 tracking-tight mr-1">ETA</span>
+                <span className="text-[13px] font-semibold text-gray-900 whitespace-nowrap tracking-tight">{formattedEta}</span>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.12 }}
                 onClick={() => onTrackOrder?.(order.id)}
-                className="w-[150px] h-[48px] bg-[#FF6B00] text-white font-bold rounded-[18px] text-[15px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center"
+                className="w-[140px] h-[44px] bg-[#FF6B00] text-white font-bold rounded-[16px] text-[14px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center"
               >
                 Track Order
               </motion.button>

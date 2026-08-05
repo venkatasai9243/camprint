@@ -33,16 +33,16 @@ export const QuickServicesGrid = ({ services }: QuickServicesProps) => {
                 }
               }}
               className={
-                'relative flex flex-col items-start p-3.5 rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] touch-manipulation h-full ' +
+                'relative flex flex-col items-start p-3 rounded-[20px] border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.05)] touch-manipulation h-full ' +
                 (service.disabled || service.comingSoon ? 'bg-gray-50 opacity-75 cursor-not-allowed' : 'bg-white hover:border-gray-200 transition-colors')
               }
               {...motionPresets.fade}
               whileTap={(!service.disabled && !service.comingSoon) ? { scale: 0.97, y: -2 } : undefined}
               transition={{ duration: 0.15 }}
             >
-              <div className="flex justify-between w-full items-start mb-2">
-                <div className={`w-[52px] h-[52px] rounded-full flex items-center justify-center ${iconBg}`}>
-                  <span className="text-[28px]">
+              <div className="flex justify-between w-full items-start mb-1.5">
+                <div className={`w-[44px] h-[44px] rounded-full flex items-center justify-center ${iconBg}`}>
+                  <span className="text-[24px]">
                     {service.icon === 'Book' ? '📚' : service.icon === 'Ticket' ? '🎫' : service.icon === 'Copy' ? '📄' : service.icon === 'Upload' ? '📤' : '⚙️'}
                   </span>
                 </div>
@@ -69,15 +69,17 @@ export const QuickServicesGrid = ({ services }: QuickServicesProps) => {
       
       <button 
         onClick={() => router.push(APP_ROUTES.SERVICES.HUB)}
-        className="w-full mt-1 flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-[20px] active:bg-gray-100 transition-colors group"
+        className="w-full mt-1 flex items-center justify-between p-3.5 bg-gray-50 border border-gray-100 rounded-[20px] active:bg-gray-100 transition-colors group"
       >
-        <div className="flex flex-col items-start text-left">
+        <div className="flex flex-col items-start text-left pl-1">
           <span className="font-bold text-[15px] text-gray-900 leading-none mb-1">View All Services</span>
-          <span className="text-xs font-medium text-gray-500">20+ Categories Available</span>
+          <span className="text-xs font-medium text-gray-500">20+ Categories</span>
         </div>
-        <span className="text-gray-400 group-hover:text-orange-500 group-active:text-orange-600 transition-colors group-hover:translate-x-1 duration-200">
-          →
-        </span>
+        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+          <span className="text-orange-500 font-bold text-lg leading-none group-hover:translate-x-0.5 transition-transform">
+            →
+          </span>
+        </div>
       </button>
     </div>
   );

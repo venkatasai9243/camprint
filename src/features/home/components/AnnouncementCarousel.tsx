@@ -35,10 +35,10 @@ export const AnnouncementCarousel = ({ announcements }: CarouselProps) => {
       {announcements.map((ann, i) => (
         <div 
           key={ann.id} 
-          className="w-[85%] max-w-[320px] h-[130px] snap-center p-4 bg-white border border-gray-100 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.05)] shrink-0 flex justify-between relative overflow-hidden"
+          className="w-[85%] max-w-[320px] h-[130px] snap-center px-5 py-4 bg-white border border-gray-100 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.05)] shrink-0 flex justify-between relative overflow-hidden"
         >
-          <div className="flex flex-col justify-between h-full z-10 w-[75%]">
-            <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col justify-between h-full z-10 w-[80%] pr-2">
+            <div className="flex flex-col gap-2">
               <span className={`self-start px-2 py-0.5 text-[9px] font-black rounded-md uppercase tracking-wider ${ann.category === 'URGENT' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
                 {ann.category}
               </span>

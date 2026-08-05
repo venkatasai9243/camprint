@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 export const BusTrackingCard = () => {
   return (
     <div className="bg-white rounded-[24px] p-5 shadow-[0_8px_30px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col items-center text-center overflow-hidden relative">
-      <div className="w-[52px] h-[52px] bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mb-3">
-        <span className="text-[28px]">🚌</span>
+      <div className="w-[64px] h-[64px] bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mb-3">
+        <span className="text-[36px]">🚌</span>
       </div>
       <h3 className="text-[17px] font-black text-gray-900 mb-1 leading-tight">Live College Bus Tracking</h3>
       
@@ -21,15 +21,15 @@ export const BusTrackingCard = () => {
         
         {/* Animated Bus */}
         <motion.div
-          animate={{ left: ["0%", "80%", "0%"] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ left: ["-10%", "90%"] }}
+          transition={{ duration: 5, repeat: Infinity, repeatType: "loop", ease: "linear" }}
           className="absolute z-10 bg-white px-1 -translate-y-1/2 top-1/2"
         >
           <span className="text-[22px] drop-shadow-sm">🚌</span>
         </motion.div>
         
         {/* Destination Pin */}
-        <div className="absolute right-0 z-10 bg-white px-1 -translate-y-1/2 top-1/2">
+        <div className="absolute right-0 z-10 bg-white px-1 -translate-y-[65%] top-1/2">
           <span className="text-[22px] drop-shadow-sm">📍</span>
         </div>
       </div>
