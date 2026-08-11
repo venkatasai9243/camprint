@@ -2,9 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Ticket, FileText, BookOpen } from 'lucide-react';
+import { Clock, Ticket, FileText, BookOpen, MapPin } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const banners = [
+  {
+    id: 0,
+    isImage: true,
+    imageUrl: '/images/banners/rcebus.png',
+  },
   {
     id: 1,
     title: 'Print Before 8 PM',
@@ -67,31 +73,55 @@ export const PromoBanners = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.4 }}
-            className={`absolute inset-0 flex flex-col justify-center px-6 ${banners[current].bg}`}
+            className={`absolute inset-0 flex flex-col justify-center ${banners[current].isImage ? '' : 'px-6'} ${banners[current].bg || 'bg-transparent'}`}
           >
-            {banners[current].icon}
-            
-            <div className="relative z-10 max-w-[70%] flex flex-col items-start gap-2">
-              <h3 className={`text-[20px] font-black leading-tight ${banners[current].textColor}`}>
-                {banners[current].title}
-              </h3>
-              <p className={`text-sm font-medium ${banners[current].descColor}`}>
-                {banners[current].desc}
-              </p>
-              
-              <button className="mt-1 -translate-y-1 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform">
-                {banners[current].cta}
-              </button>
-            </div>
+            {banners[current].isImage ? (
+              <div 
+                className="relative w-full h-full cursor-pointer"
+                onClick={() => toast('Live Bus Tracking is coming soon. BLINTZY is working on real-time college bus tracking for RCE.', { icon: '🚌' })}
+              >
+                <img 
+                  src={banners[current].imageUrl} 
+                  alt="Live Bus Tracking" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+            ) : (
+              <>
+                {banners[current].icon}
+                
+                <div className="relative z-10 max-w-[70%] flex flex-col items-start gap-2">
+                  <h3 className={`text-[20px] font-black leading-tight ${banners[current].textColor}`}>
+                    {banners[current].title}
+                  </h3>
+                  <p className={`text-sm font-medium ${banners[current].descColor}`}>
+                    {banners[current].desc}
+                  </p>
+                  
+                  <button className="mt-1 -translate-y-1 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform">
+                    {banners[current].cta}
+                  </button>
+                </div>
+              </>
+            )}
           </motion.div>
         </AnimatePresence>
         
         <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2.5 z-20">
           {banners.map((_, i) => (
-            <div
+            <button
               key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`}
-            />
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrent(i);
+              }}
+              className="p-2 -m-2 cursor-pointer"
+              aria-label={`Go to slide ${i + 1}`}
+            >
+              <div
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`}
+              />
+            </button>
           ))}
         </div>
       </div>

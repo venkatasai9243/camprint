@@ -24,7 +24,7 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
 
   if (!orders || orders.length === 0) {
     return (
-      <div className="px-4">
+      <div className="px-5">
         <WidgetEmptyState
           title="No Active Orders"
           description="Your print queue is empty."
@@ -45,7 +45,7 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
   }
 
   return (
-    <div className="w-full relative px-4">
+    <div className="w-full relative">
       <div className="relative overflow-hidden w-full rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 bg-white">
         <AnimatePresence mode="wait">
           <motion.div 
@@ -54,7 +54,7 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="w-full px-4 py-3 flex flex-col h-[220px] justify-between"
+            className="w-full px-5 py-3 flex flex-col h-[220px] justify-between"
           >
             {/* Status Chip */}
             <div className="h-[20px] flex items-center mb-1">
@@ -79,17 +79,17 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
             </div>
 
             {/* Bottom Row */}
-            <div className="flex flex-row justify-between items-center mt-auto h-[44px] gap-2">
-              <div className="flex flex-row items-center justify-between bg-gray-50 px-3 h-[44px] flex-1 rounded-[16px] min-w-[140px]">
-                <span className="text-[12px] font-medium text-gray-500 tracking-tight mr-1">ETA</span>
-                <span className="text-[13px] font-semibold text-gray-900 whitespace-nowrap tracking-tight">{formattedEta}</span>
+            <div className="flex flex-row flex-nowrap justify-between items-center mt-auto h-[44px] gap-2 overflow-hidden">
+              <div className="flex flex-row items-center justify-between bg-gray-50 px-2 sm:px-3 h-[44px] flex-1 rounded-[16px] min-w-0 overflow-hidden">
+                <span className="text-[12px] font-medium text-gray-500 tracking-tight mr-1 shrink-0">ETA</span>
+                <span className="text-[13px] font-semibold text-gray-900 whitespace-nowrap tracking-tight overflow-hidden text-ellipsis">{formattedEta}</span>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.12 }}
                 onClick={() => onTrackOrder?.(order.id)}
-                className="w-[140px] h-[44px] bg-[#FF6B00] text-white font-bold rounded-[16px] text-[14px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center"
+                className="w-auto min-w-[145px] sm:min-w-[150px] px-3 h-[44px] bg-[#FF6B00] text-white font-bold rounded-[16px] text-[14px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center whitespace-nowrap"
               >
                 Track Order
               </motion.button>
@@ -101,10 +101,19 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
       {orders.length > 1 && (
         <div className="flex justify-center gap-1.5 mt-4">
           {orders.map((_, i) => (
-            <div
+            <button
               key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-5 bg-orange-500' : 'w-1.5 bg-gray-200'}`}
-            />
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrent(i);
+              }}
+              className="p-2 -m-2 cursor-pointer"
+              aria-label={`Go to order ${i + 1}`}
+            >
+              <div
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-5 bg-orange-500' : 'w-1.5 bg-gray-200'}`}
+              />
+            </button>
           ))}
         </div>
       )}

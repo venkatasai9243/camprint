@@ -39,8 +39,8 @@ export const PersonalDetailsStep = () => {
       transition={{ duration: 0.3 }}
       className="flex flex-col h-full"
     >
-      <div className="flex-1 overflow-y-auto pt-6 px-1 pb-24 space-y-6">
-        <div className="text-center mb-8">
+      <div className="flex-1 overflow-y-auto pt-4 px-1 pb-16 space-y-4">
+        <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-black">Personal Details</h2>
           <p className="text-gray-500 text-sm mt-1">Tell us a bit about yourself</p>
         </div>

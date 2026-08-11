@@ -32,7 +32,7 @@ export function InteractiveDemo() {
           ))}
         </div>
 
-        <div className="h-[300px] flex flex-col justify-center">
+        <div className="min-h-[350px] h-auto flex flex-col justify-center pb-4">
           <AnimatePresence mode="wait">
             
             {step === 1 && (
@@ -102,12 +102,12 @@ export function InteractiveDemo() {
             )}
 
             {step === 6 && (
-              <motion.div key="6" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-                <div className="w-24 h-24 mx-auto bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-green-500/20">
+              <motion.div key="6" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center pt-2">
+                <div className="w-24 h-24 mx-auto bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-xl shadow-green-500/20 mt-4 sm:mt-0">
                   <CheckCircle className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold mb-2">Order Summary</h3>
-                <p className="text-gray-500 mb-8">₹45.00 • physics-manual.pdf • Spiral Bound</p>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">Order Summary</h3>
+                <p className="text-gray-500 mb-6 text-sm sm:text-base">₹45.00 • physics-manual.pdf • Spiral Bound</p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button onClick={resetDemo} className="py-4 px-8 bg-gray-100 hover:bg-gray-200 rounded-xl font-bold transition-colors">

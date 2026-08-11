@@ -48,12 +48,12 @@ export const QuickServicesGrid = ({ services }: QuickServicesProps) => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-bold text-[15px] text-gray-900 text-left leading-tight">
+              <div className="flex items-start justify-between w-full gap-2 mb-0.5 flex-nowrap">
+                <span className="font-bold text-[15px] text-gray-900 text-left leading-tight min-w-0">
                   {service.title}
                 </span>
                 {service.badge && (
-                  <span className="px-1.5 py-0.5 bg-orange-50 text-orange-600 text-[9px] uppercase font-bold tracking-widest rounded-md">
+                  <span className="px-1.5 py-0.5 bg-orange-50 text-orange-600 text-[9px] uppercase font-bold tracking-widest rounded-md whitespace-nowrap flex-shrink-0 mt-0.5">
                     {service.badge}
                   </span>
                 )}

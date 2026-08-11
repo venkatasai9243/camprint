@@ -165,16 +165,21 @@ export const OnboardingCarousel: React.FC<OnboardingCarouselProps> = ({
         {slides.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setCurrentIndex(idx);
               setIsFinished(false);
             }}
-            className={cn(
-              "h-1.5 rounded-full transition-all duration-300",
-              idx === currentIndex ? "w-6 sm:w-8 bg-orange-500" : "w-1.5 sm:w-2 bg-gray-200 hover:bg-gray-300"
-            )}
+            className="p-2 -m-2 cursor-pointer"
             aria-label={`Go to slide ${idx + 1}`}
-          />
+          >
+            <div
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300",
+                idx === currentIndex ? "w-6 sm:w-8 bg-orange-500" : "w-1.5 sm:w-2 bg-gray-200 hover:bg-gray-300"
+              )}
+            />
+          </button>
         ))}
       </div>
     </div>
