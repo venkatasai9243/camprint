@@ -20,12 +20,18 @@ export interface SubjectDTO {
   id: string;
   name: string;
   code: string;
+  branch_id: string;
+  year_id: string;
+  semester_id: string;
 }
 
 export interface ManualDTO {
   id: string;
   name: string;
   subject_id: string;
+  branch_id: string;
+  year_id: string;
+  semester_id: string;
   description: string;
   pages: number;
   updated_at: string;
