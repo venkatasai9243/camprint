@@ -10,6 +10,7 @@ const banners = [
     id: 0,
     isImage: true,
     imageUrl: '/images/banners/rcebus.png',
+    route: '/app/services/bus-tracking'
   },
   {
     id: 1,
@@ -20,6 +21,7 @@ const banners = [
     textColor: 'text-white',
     descColor: 'text-orange-100',
     icon: <Clock className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-2 transform -rotate-12" strokeWidth={1} />,
+    route: '/app/services/manuals'
   },
   {
     id: 2,
@@ -30,6 +32,7 @@ const banners = [
     textColor: 'text-white',
     descColor: 'text-purple-200',
     icon: <Ticket className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-1 transform rotate-12" strokeWidth={1} />,
+    route: '/app/services/hall-tickets'
   },
   {
     id: 3,
@@ -40,6 +43,7 @@ const banners = [
     textColor: 'text-white',
     descColor: 'text-blue-200',
     icon: <FileText className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-2 transform -rotate-6" strokeWidth={1} />,
+    route: '/app/services/upload'
   },
   {
     id: 4,
@@ -50,6 +54,7 @@ const banners = [
     textColor: 'text-white',
     descColor: 'text-green-200',
     icon: <BookOpen className="w-24 h-24 text-white opacity-20 absolute right-4 -bottom-1 transform rotate-6" strokeWidth={1} />,
+    route: '/app/services/manuals'
   },
 ];
 
@@ -98,9 +103,18 @@ export const PromoBanners = () => {
                     {banners[current].desc}
                   </p>
                   
-                  <button className="mt-1 -translate-y-1 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform">
+                  <motion.button 
+                    whileTap={{ scale: 0.97 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (banners[current].route) {
+                        window.location.href = banners[current].route as string;
+                      }
+                    }}
+                    className="mt-1 -translate-y-1 px-5 h-[36px] bg-white text-gray-900 font-bold rounded-[12px] text-xs shadow-sm hover:scale-105 transition-transform"
+                  >
                     {banners[current].cta}
-                  </button>
+                  </motion.button>
                 </div>
               </>
             )}

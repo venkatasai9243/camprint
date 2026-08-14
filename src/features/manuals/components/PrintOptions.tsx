@@ -6,15 +6,16 @@ import { motion } from 'framer-motion';
 interface PrintOptionsProps {
   config: PrintConfig;
   onChange: (config: PrintConfig) => void;
+  allowedBindings?: PrintConfig['bindingType'][];
 }
 
-export const PrintOptions = ({ config, onChange }: PrintOptionsProps) => {
+export const PrintOptions = ({ config, onChange, allowedBindings }: PrintOptionsProps) => {
   const updateConfig = (updates: Partial<PrintConfig>) => {
     onChange({ ...config, ...updates });
   };
 
   return (
-    <div className="flex flex-col gap-6 p-4 pb-32">
+    <div className="flex flex-col gap-6 p-4">
       {/* Copies */}
       <div className="flex flex-col gap-3">
         <label className="font-semibold text-foreground">Copies</label>
@@ -25,9 +26,20 @@ export const PrintOptions = ({ config, onChange }: PrintOptionsProps) => {
           >
             -
           </button>
-          <span className="text-2xl font-bold w-8 text-center">{config.copies}</span>
+          <input 
+            type="number" 
+            value={config.copies}
+            onChange={(e) => {
+              const val = parseInt(e.target.value, 10);
+              if (!isNaN(val) && val > 0) {
+                updateConfig({ copies: val });
+              }
+            }}
+            min="1"
+            className="text-2xl font-bold w-16 text-center bg-transparent border-none focus:outline-none focus:ring-0"
+          />
           <button 
-            onClick={() => updateConfig({ copies: Math.min(10, config.copies + 1) })}
+            onClick={() => updateConfig({ copies: Math.min(100, config.copies + 1) })}
             className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center text-xl hover:bg-secondary/50 active:scale-95 transition-all"
           >
             +
@@ -78,26 +90,20 @@ export const PrintOptions = ({ config, onChange }: PrintOptionsProps) => {
       </div>
 
       {/* Binding */}
-      <div className="flex flex-col gap-3">
-        <label className="font-semibold text-foreground">Binding Option</label>
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { id: 'none', label: 'Stapled' },
-            { id: 'spiral', label: 'Spiral' },
-            { id: 'softbound', label: 'Softbound' },
-            { id: 'hardbound', label: 'Hardbound' }
-          ].map(option => (
+      {(!allowedBindings || (allowedBindings.length > 0 && !allowedBindings.includes('none'))) && (
+        <div className="flex flex-col gap-3">
+          <label className="font-semibold text-foreground">Binding Option</label>
+          <div className="grid grid-cols-1 gap-3">
             <button
-              key={option.id}
-              onClick={() => updateConfig({ bindingType: option.id as PrintConfig['bindingType'] })}
-              className={`p-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 whitespace-nowrap flex-shrink-0 ${config.bindingType === option.id ? 'bg-primary border-primary text-primary-foreground font-bold shadow-md' : 'bg-card border-border hover:border-primary/50 text-foreground font-medium'}`}
+              onClick={() => {}}
+              className={`p-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 whitespace-nowrap bg-primary border-primary text-primary-foreground font-bold shadow-md`}
             >
-              {config.bindingType === option.id && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><polyline points="20 6 9 17 4 12"/></svg>}
-              {option.label}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              Spiral Binding
             </button>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

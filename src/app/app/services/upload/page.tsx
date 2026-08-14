@@ -1,6 +1,17 @@
 import React from 'react';
-import { ServicePlaceholder } from '@/features/services/components/ServicePlaceholder';
+import { AppHeader } from '@/features/app-shell/components/AppHeader';
+import { DocumentUploadFlow } from '@/features/services/components/DocumentUploadFlow';
 
-export default function UploadPDFPage() {
-  return <ServicePlaceholder title="Upload PDF" description="Custom document upload with advanced print settings is coming very soon." icon="??" />
+export default function CustomUploadPage() {
+  return (
+    <>
+      <DocumentUploadFlow 
+        title="Upload Your Document"
+        subtitle="Upload your custom PDF document."
+        serviceType="upload_pdf"
+        allowedBindings={['spiral']}
+        basePrice={10}
+      />
+    </>
+  );
 }

@@ -15,7 +15,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     if (path.includes('/notifications')) return 'Notifications';
     if (path.includes('/manuals')) return 'Manuals';
     if (path.includes('/hall-tickets')) return 'Hall Tickets';
+    if (path.includes('/upload')) return 'Custom Upload';
+    if (path.includes('/bus-tracking')) return 'Bus Tracking';
     if (path.includes('/services')) return 'Services';
+    if (path.includes('/cart')) return 'Shopping Cart';
+    if (path.includes('/checkout')) return 'Secure Checkout';
     if (path.includes('/settings')) return 'Settings';
     if (path.includes('/support')) return 'Support';
     return 'BLINTZY';

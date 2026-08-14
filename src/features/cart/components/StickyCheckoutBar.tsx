@@ -11,19 +11,20 @@ interface StickyCheckoutBarProps {
 
 export const StickyCheckoutBar = ({ total, itemCount, onCheckout, disabled }: StickyCheckoutBarProps) => {
   return (
-    <div className="fixed bottom-[72px] left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-background border-t border-border shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-40 p-4">
-      <div className="max-w-4xl mx-auto flex justify-between items-center">
+    <div className="fixed bottom-[88px] left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-gray-100 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] z-40 px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] rounded-t-3xl">
+      <div className="flex justify-between items-center w-full">
         <div className="flex flex-col">
-          <span className="text-xs text-muted-foreground font-medium">{itemCount} {itemCount === 1 ? 'Item' : 'Items'}</span>
-          <span className="text-2xl font-black text-foreground leading-tight">₹{total.toFixed(2)}</span>
+          <span className="text-[13px] font-bold text-gray-400 leading-tight uppercase tracking-wide">{itemCount} {itemCount === 1 ? 'Item' : 'Items'}</span>
+          <span className="text-[22px] font-black text-gray-900 leading-tight">₹{total.toFixed(2)}</span>
         </div>
         
-        <Button 
+        <button 
           onClick={onCheckout}
-          className={`px-8 py-4 bg-primary text-primary-foreground font-bold rounded-xl ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary/90 shadow-md hover:shadow-lg'}`}
+          disabled={disabled}
+          className={`flex items-center justify-center gap-1.5 px-6 h-[52px] bg-[#FF6B00] text-white font-bold text-[15px] rounded-[16px] transition-all active:scale-95 ${disabled ? 'opacity-50 cursor-not-allowed' : 'shadow-[0_4px_12px_rgba(255,107,0,0.25)] hover:bg-[#E66000]'}`}
         >
-          Proceed to Checkout
-        </Button>
+          Proceed to Checkout <span className="text-lg leading-none translate-y-[-1px]">→</span>
+        </button>
       </div>
     </div>
   );

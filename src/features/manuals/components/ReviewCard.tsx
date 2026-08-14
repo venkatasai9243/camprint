@@ -1,17 +1,19 @@
 import React from 'react';
 import { Manual, PrintConfig } from '../types';
+import { PriceBreakdown } from '../utils/priceEngine';
 import { Button } from '@/design-system/components/buttons/Button/Button';
 import { motion } from 'framer-motion';
 
 interface ReviewCardProps {
   manual: Manual;
   config: PrintConfig;
-  totalPrice: number;
+  priceBreakdown: PriceBreakdown;
+  estimatedDelivery: string;
   onAddToCart: () => void;
   isAddingToCart?: boolean;
 }
 
-export const ReviewCard = ({ manual, config, totalPrice, onAddToCart, isAddingToCart }: ReviewCardProps) => {
+export const ReviewCard = ({ manual, config, priceBreakdown, estimatedDelivery, onAddToCart, isAddingToCart }: ReviewCardProps) => {
   return (
     <div className="flex flex-col gap-6 p-4">
       <div className="bg-card rounded-2xl border border-border p-5 shadow-sm flex flex-col gap-4">
@@ -46,21 +48,38 @@ export const ReviewCard = ({ manual, config, totalPrice, onAddToCart, isAddingTo
         </div>
       </div>
 
-      <div className="bg-primary/5 rounded-2xl p-5 flex items-center justify-between border border-primary/20">
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-primary">Total Price</span>
-          <span className="text-3xl font-black text-foreground">₹{totalPrice}</span>
+      <div className="bg-card rounded-2xl border border-border p-5 shadow-sm flex flex-col gap-3">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Base Manual</span>
+          <span className="font-medium">₹{priceBreakdown.basePrice}</span>
         </div>
-        <div className="text-right flex flex-col">
-          <span className="text-xs text-muted-foreground">Est. Delivery</span>
-          <span className="text-sm font-bold text-foreground">Today 4:00 PM</span>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Printing</span>
+          <span className="font-medium">₹{priceBreakdown.printingCost}</span>
         </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Binding</span>
+          <span className="font-medium">₹{priceBreakdown.bindingCost}</span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Delivery</span>
+          <span className="font-bold text-green-600">FREE</span>
+        </div>
+        <div className="border-t border-border/50 pt-3 flex justify-between items-center mt-1">
+          <span className="font-bold text-foreground">Total Price</span>
+          <span className="text-2xl font-black text-primary">₹{priceBreakdown.total}</span>
+        </div>
+      </div>
+      
+      <div className="bg-secondary/20 rounded-xl p-4 flex flex-col items-center justify-center border border-secondary/30">
+        <span className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Estimated Delivery</span>
+        <span className="text-sm font-bold text-foreground">{estimatedDelivery}</span>
       </div>
 
       <Button
         onClick={onAddToCart}
         isDisabled={isAddingToCart}
-        className="w-full bg-primary text-primary-foreground font-bold py-6 text-lg mt-4 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform"
+        className="w-full bg-primary text-primary-foreground font-bold py-6 text-lg mt-2 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform"
       >
         {isAddingToCart ? 'Adding to Cart...' : 'Add to Cart'}
       </Button>

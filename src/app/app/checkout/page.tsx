@@ -5,6 +5,7 @@ import { APP_ROUTES } from '@/constants/routes';
 import { useCart } from '@/features/cart/providers/CartProvider';
 import { CheckoutProvider, useCheckout } from '@/features/checkout/providers/CheckoutProvider';
 import { usePlaceOrder } from '@/features/checkout/hooks/usePlaceOrder';
+import { AppHeader } from '@/features/app-shell/components/AppHeader';
 import { CheckoutHeader } from '@/features/checkout/components/CheckoutHeader';
 import { DeliveryCard } from '@/features/checkout/components/DeliveryCard';
 import { PaymentMethodCard } from '@/features/checkout/components/PaymentMethodCard';
@@ -23,13 +24,16 @@ const CheckoutPageContent = () => {
   const { placeOrder, isPlacingOrder, error: orderError } = usePlaceOrder();
   
   const [successOrderId, setSuccessOrderId] = React.useState<string | null>(null);
+  const [confirmedCart, setConfirmedCart] = React.useState<any>(null);
 
   // If cart is empty, redirect back to cart
   useEffect(() => {
     if (!cart || cart.items.length === 0) {
-      router.replace(APP_ROUTES.CART);
+      if (!successOrderId) {
+        router.replace(APP_ROUTES.CART);
+      }
     }
-  }, [cart, router]);
+  }, [cart, router, successOrderId]);
 
   const handlePlaceOrder = async () => {
     if (!cart) return;
@@ -41,61 +45,66 @@ const CheckoutPageContent = () => {
     }, cart.summary.total);
 
     if (response.success && response.orderId) {
+      setConfirmedCart(cart);
       clearSession();
       setSuccessOrderId(response.orderId);
     }
   };
 
-  if (!cart || cart.items.length === 0) {
+  const displayCart = cart || confirmedCart;
+
+  if (!displayCart || displayCart.items.length === 0) {
     return <div className="p-8 text-center text-muted-foreground">Cart is empty...</div>;
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-background relative">
-      <CheckoutHeader />
-
-      <main className="flex-1 flex flex-col gap-6 p-4 max-w-4xl mx-auto w-full pb-40">
-        <DeliveryCard />
-        
-        <PaymentMethodCard 
-          selectedId={state.paymentMethodId}
-          onSelect={setPaymentMethodId}
-        />
-        
-        <OrderNotesCard 
-          notes={state.studentNotes}
-          onChange={setStudentNotes}
-        />
-        
-        <CouponCard 
-          appliedCode={state.couponCode}
-          onApply={setCouponCode}
-          onRemove={() => setCouponCode(null)}
-        />
-        
-        <OrderSummaryCard cart={cart} />
-        
-        <TermsCard 
-          accepted={state.termsAccepted}
-          onToggle={setTermsAccepted}
-        />
-      </main>
-
-      <StickyCheckoutBar 
-        total={cart.summary.total}
-        isValid={isValid}
-        isPlacingOrder={isPlacingOrder}
-        onPlaceOrder={handlePlaceOrder}
-      />
-
-      {successOrderId && (
+    <div className="flex flex-col w-full h-full relative">
+      {successOrderId && confirmedCart ? (
         <SuccessAnimation 
           orderId={successOrderId}
+          cart={confirmedCart}
           onTrack={() => {
             router.push(APP_ROUTES.ORDERS.DETAILS(successOrderId));
           }}
           onContinue={() => router.push(APP_ROUTES.HOME)}
         />
+      ) : (
+        <>
+          <main className="flex-1 flex flex-col gap-6 w-full max-w-4xl mx-auto pb-40">
+            <h1 className="text-2xl font-bold text-foreground">Secure Checkout</h1>
+            <DeliveryCard />
+            
+            <PaymentMethodCard 
+              selectedId={state.paymentMethodId}
+              onSelect={setPaymentMethodId}
+            />
+            
+            <OrderNotesCard 
+              notes={state.studentNotes}
+              onChange={setStudentNotes}
+            />
+            
+            <CouponCard 
+              appliedCode={state.couponCode}
+              onApply={setCouponCode}
+              onRemove={() => setCouponCode(null)}
+            />
+            
+            <OrderSummaryCard cart={displayCart} />
+            
+            <TermsCard 
+              accepted={state.termsAccepted}
+              onToggle={setTermsAccepted}
+            />
+          </main>
+
+          <StickyCheckoutBar 
+            total={displayCart.summary.total}
+            isValid={isValid}
+            isPlacingOrder={isPlacingOrder}
+            onPlaceOrder={handlePlaceOrder}
+          />
+        </>
       )}
 
       {/* Error Bottom Sheet */}

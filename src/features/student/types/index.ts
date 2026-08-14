@@ -15,6 +15,7 @@ export interface StudentProfile {
 export interface StudentAcademicRecord {
   student_id: string;
   roll_number: string;
+  admission_year?: string;
   college_id: string;
   department_id: string;
   branch_id: string;

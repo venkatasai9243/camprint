@@ -88,7 +88,13 @@ export const CurrentOrderHero = ({ orders, onTrackOrder }: CurrentOrderHeroProps
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.12 }}
-                onClick={() => onTrackOrder?.(order.id)}
+                onClick={() => {
+                  if (onTrackOrder) {
+                    onTrackOrder(order.id);
+                  } else {
+                    window.location.href = `/app/orders/${order.id}`;
+                  }
+                }}
                 className="w-auto min-w-[145px] sm:min-w-[150px] px-3 h-[44px] bg-[#FF6B00] text-white font-bold rounded-[16px] text-[14px] shadow-md shadow-orange-500/20 shrink-0 flex items-center justify-center whitespace-nowrap"
               >
                 Track Order

@@ -108,7 +108,7 @@ export default async function HomeDashboard() {
 
   return (
     <DashboardEntry>
-      <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col gap-5 w-full pb-24">
         {/* Backend-Driven Widget Layout Engine */}
         {activeWidgets.map(widget => (
           <React.Fragment key={widget.id}>

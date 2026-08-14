@@ -41,17 +41,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const recalculateCart = (items: CartItem[]) => {
     let subtotal = 0;
     const updatedItems = items.map(item => {
-      if (item.serviceType === 'manual') {
-        const total = calculateManualPrice(item.priceBreakdown.base, 100, item.printOptions as unknown as PrintConfig);
-        item.priceBreakdown.total = total * item.quantity;
-      }
-      subtotal += item.priceBreakdown.total;
+      // The total is already calculated when the item is added and stored in priceBreakdown
+      // We only multiply by quantity if we are supporting multiple identical items via cart
+      // For BLINTZY, copies are inside config, so quantity is usually 1.
+      subtotal += item.priceBreakdown.total * item.quantity;
       return item;
     });
 
     const discount = coupon ? subtotal * 0.1 : 0;
     const discountedTotal = subtotal - discount;
-    const tax = discountedTotal * TAX_RATE;
+    const tax = 0; // Removing tax to match unified pricing display
     const grandTotal = discountedTotal + tax;
 
     setCart(prev => prev ? {

@@ -33,7 +33,7 @@ export const StickyCheckoutBar = ({ total, onPlaceOrder, isValid, isPlacingOrder
               <span>Processing...</span>
             </div>
           ) : (
-            'Place Order &rarr;'
+            'Place Order →'
           )}
         </Button>
       </div>

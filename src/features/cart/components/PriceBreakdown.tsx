@@ -23,8 +23,8 @@ export const PriceBreakdown = ({ summary }: PriceBreakdownProps) => {
       )}
       
       <div className="flex justify-between items-center text-sm text-muted-foreground">
-        <span>Taxes & Fees (5%)</span>
-        <span className="font-medium text-foreground">₹{summary.tax.toFixed(2)}</span>
+        <span>Delivery</span>
+        <span className="font-bold text-green-600">FREE</span>
       </div>
       
       <div className="h-px w-full bg-border/60 my-1"></div>

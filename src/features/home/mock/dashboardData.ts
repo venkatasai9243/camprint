@@ -27,9 +27,9 @@ export const MOCK_ACTIVE_ORDERS: BaseResponseDTO<CurrentOrderDTO[]> = {
 export const MOCK_QUICK_SERVICES: BaseResponseDTO<QuickServiceDTO[]> = {
   data: [
     { id: 'srv_1', title: 'Manuals', icon: 'Book', description: 'College Manuals', color: 'bg-blue-500', route: '/app/services/manuals', enabled: true, coming_soon: false, disabled: false, is_new: false, is_popular: true, is_recommended: false, requires_login: true, permissions: [], badge: 'Popular', analytics_key: 'srv_manuals' },
+    { id: 'srv_bus', title: 'Bus Tracking', icon: 'BusFront', description: 'Track your college bus', color: 'bg-green-600', route: '/app/services/bus-tracking', enabled: true, coming_soon: true, disabled: false, is_new: true, is_popular: false, is_recommended: false, requires_login: true, permissions: [], analytics_key: 'srv_bus' },
     { id: 'srv_2', title: 'Hall Tickets', icon: 'Ticket', description: 'Print instantly', color: 'bg-orange-500', route: '/app/services/hall-tickets', enabled: true, badge: 'Urgent', coming_soon: false, disabled: false, is_new: false, is_popular: false, is_recommended: true, requires_login: true, permissions: [], analytics_key: 'srv_tickets' },
-    { id: 'srv_3', title: 'Custom Uploads', icon: 'Upload', description: 'Upload custom documents', color: 'bg-purple-500', route: '/app/services/upload', enabled: true, coming_soon: false, disabled: false, is_new: false, is_popular: false, is_recommended: false, requires_login: true, permissions: [], badge: 'Most Used', analytics_key: 'srv_upload' },
-    { id: 'srv_4', title: 'Assignments', icon: 'Copy', description: 'Print assignments', color: 'bg-green-500', route: '/app/services/assignments', enabled: true, coming_soon: false, disabled: false, is_new: true, is_popular: false, is_recommended: false, requires_login: true, permissions: [], badge: 'New', analytics_key: 'srv_assignments' }
+    { id: 'srv_3', title: 'Custom Uploads', icon: 'Upload', description: 'Upload custom documents', color: 'bg-purple-500', route: '/app/services/upload', enabled: true, coming_soon: false, disabled: false, is_new: false, is_popular: false, is_recommended: false, requires_login: true, permissions: [], badge: 'Most Used', analytics_key: 'srv_upload' }
   ],
   meta: { timestamp: new Date().toISOString(), version: '1.0' }
 };

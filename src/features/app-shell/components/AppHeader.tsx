@@ -1,11 +1,16 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
+import { useCart } from '@/features/cart/providers/CartProvider';
+import { APP_ROUTES } from '@/constants/routes';
 
 export function AppHeader({ title }: { title: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === '/app/home';
+  const { cart } = useCart();
+  
+  const itemCount = cart?.items?.length || 0;
 
   return (
     <header className="sticky top-0 z-0 flex flex-col justify-end w-full bg-[#FF6B00] text-white pt-[env(safe-area-inset-top)] h-[72px] pb-[1.625rem] px-6 rounded-b-[44px]">
@@ -20,14 +25,21 @@ export function AppHeader({ title }: { title: string }) {
           )}
         </div>
         
-        <h1 className="text-[21px] font-bold absolute left-0 right-0 text-center pointer-events-none truncate px-20">
+        <h1 className="text-[19px] font-extrabold absolute left-0 right-0 text-center pointer-events-none truncate px-[5.5rem] tracking-wide">
           {title}
         </h1>
         
         <div className="flex items-center justify-end gap-3 z-10">
-          <button className="text-white hover:opacity-80 transition-opacity flex items-center justify-center relative">
+          <button 
+            onClick={() => router.push(APP_ROUTES.CART)}
+            className="text-white hover:opacity-80 transition-opacity flex items-center justify-center relative"
+          >
             <ShoppingCart className="w-6 h-6" strokeWidth={2.5} />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-orange-200 rounded-full border border-[#FF6B00]" />
+            {itemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-white text-[#FF6B00] text-[10px] font-bold px-[5px] py-[1px] rounded-full min-w-[18px] text-center shadow-sm">
+                {itemCount}
+              </span>
+            )}
           </button>
         </div>
       </div>
